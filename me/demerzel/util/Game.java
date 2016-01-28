@@ -2,6 +2,7 @@ package me.demerzel.util;
 
 import me.demerzel.command.Command;
 import me.demerzel.command.CommandFactory;
+import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.impl.Helmet;
 import me.demerzel.item.impl.Revolver;
 import me.demerzel.item.impl.Sledgehammer;
@@ -18,9 +19,8 @@ import java.util.Scanner;
 public class Game {
     private static String command;
 
-    private static int game = 1;
     private static CommandFactory factory = new CommandFactory();
-    private static Player player;
+    private static EntityPlayer player;
 
     public static void main(String[] args) {
         Location start = new Start();
@@ -34,7 +34,7 @@ public class Game {
         ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
         ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
 
-        player = new Player("Sergeant Wolf", "A badass sergenat", start);
+        player = new EntityPlayer("Sergeant Wolf", "A badass sergenat", start);
 
         start.addItem(new Revolver());
         start.addItem(new Sledgehammer());
@@ -94,7 +94,7 @@ public class Game {
         return true;
     }
 
-    public static Player getPlayer(){
+    public static EntityPlayer getPlayer(){
         return player;
     }
 }

@@ -1,16 +1,16 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
+import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 import me.demerzel.location.Location;
-import me.demerzel.util.Player;
 import me.demerzel.util.Game;
 
 
 public class Pickup extends Command {
     @Override
     public boolean execute(String[] args) {
-        Player player = Game.getPlayer();
+        EntityPlayer player = Game.getPlayer();
         Location location = player.getLocation();
 
         for(Item item: location.getItems()){

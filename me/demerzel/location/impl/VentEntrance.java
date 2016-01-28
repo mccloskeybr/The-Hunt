@@ -1,7 +1,7 @@
 package me.demerzel.location.impl;
 
+import me.demerzel.entity.EntityPlayer;
 import me.demerzel.location.Location;
-import me.demerzel.util.Player;
 
 
 public class VentEntrance extends Location {
@@ -10,7 +10,7 @@ public class VentEntrance extends Location {
     }
 
     @Override
-    public void run(Player player) {
+    public void run(EntityPlayer player) {
 
     }
 }

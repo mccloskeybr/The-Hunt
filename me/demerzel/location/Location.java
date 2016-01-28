@@ -1,7 +1,7 @@
 package me.demerzel.location;
 
+import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
-import me.demerzel.util.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,5 +123,5 @@ public abstract class Location {
         this.state = state;
     }
 
-    public abstract void run(Player player);
+    public abstract void run(EntityPlayer player);
 }
