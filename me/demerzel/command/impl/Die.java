@@ -5,8 +5,8 @@ import me.demerzel.util.Game;
 
 
 public class Die extends Command {
-    public Die(String[] aliases, String description) {
-        super(aliases, description);
+    public Die(String... aliases) {
+        super(aliases);
     }
 
     @Override

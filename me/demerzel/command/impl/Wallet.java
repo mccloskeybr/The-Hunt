@@ -6,8 +6,8 @@ import me.demerzel.util.Game;
 
 
 public class Wallet extends Command {
-    public Wallet(String[] aliases, String description) {
-        super(aliases, description);
+    public Wallet(String... aliases) {
+        super(aliases);
     }
 
     @Override

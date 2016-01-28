@@ -9,8 +9,8 @@ import me.demerzel.util.Game;
  * Created by Demerzel on 1/28/16.
  */
 public class Attack extends Command {
-    public Attack(String[] aliases, String description) {
-        super(aliases, description);
+    public Attack(String... aliases) {
+        super(aliases);
     }
 
     @Override

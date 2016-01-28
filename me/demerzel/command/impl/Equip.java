@@ -7,8 +7,8 @@ import me.demerzel.util.Game;
 
 
 public class Equip extends Command {
-    public Equip(String[] aliases, String description) {
-        super(aliases, description);
+    public Equip(String... aliases) {
+        super(aliases);
     }
 
     @Override

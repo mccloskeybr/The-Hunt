@@ -6,8 +6,8 @@ import me.demerzel.util.Game;
 
 
 public class Examine extends Command {
-    public Examine(String[] aliases, String description) {
-        super(aliases, description);
+    public Examine(String... aliases) {
+        super(aliases);
     }
 
     @Override

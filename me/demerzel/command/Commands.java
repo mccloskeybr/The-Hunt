@@ -10,18 +10,18 @@ public class Commands {
     public Commands(){
         commandHashMap = new HashMap<>();
 
-        new Attack(new String[] {"attack"}, "Attack an enemy entity. Usage: attack <integer>").register(this);
-        new Crap(new String[] {"poop", "poo", "crap"}, "Take a poo right on the floor.").register(this);
-        new Dance(new String[] {"dance"}, "Dance like you've never danced before.").register(this);
-        new Die(new String[] {"die", "suicide"}, "Drop dead where you're standing.").register(this);
-        new Equip(new String[] {"equip"}, "Equip an item from your inventory. Usage: equip <item>").register(this);
-        new Examine(new String[] {"examine", "look"}, "Look around the room more closely").register(this);
-        new Go(new String[] {"go", "move"}, "Move to a different location. Usage: go <direction>").register(this);
-        new Inventory(new String[] {"items", "inventory"}, "Look at your inventory, including your stats.").register(this);
-        new Pickup(new String[] {"pickup"}, "Pick up an item off the ground. Usage: pickup <item>").register(this);
-        new Sell(new String[] {"sell"}, "Not used at this time.").register(this);
-        new Use(new String[] {"use"}, "Use an item in your inventory. Usage: use <item>").register(this);
-        new Wallet(new String[] {"wallet", "money"}, "Look at your wallet").register(this);
+        new Attack("attack").setDescription("Attack an entity. Usage: attack <integer>").register(this);
+        new Crap("crap", "poo", "poop").setDescription("Take a poo right where you're standing.").register(this);
+        new Dance("dance").setDescription("Break out into a killer dance").register(this);
+        new Die("die", "suicide").setDescription("Drop dead in the middle of the room.").register(this);
+        new Equip("equip").setDescription("Equip an item from your inventory. Usage: equip <item>").register(this);
+        new Examine("examine", "look").setDescription("Examine the room you're in more closely.").register(this);
+        new Go("go", "move").setDescription("Move to another room. Usage: go <direction>").register(this);
+        new Inventory("items", "inventory").setDescription("Look at your inventory along with your current stats.").register(this);
+        new Pickup("pickup").setDescription("Pick up an item off the ground. Usage: pickup <item>").register(this);
+        new Sell("sell").setDescription("Not currently in use.").register(this);
+        new Use("use").setDescription("Use an item from your inventory. Usage: use <item>").register(this);
+        new Wallet("wallet", "money").setDescription("View your wallet.").register(this);
     }
 
     public Command getCommand(String cmd){

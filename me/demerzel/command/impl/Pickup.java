@@ -8,8 +8,8 @@ import me.demerzel.util.Game;
 
 
 public class Pickup extends Command {
-    public Pickup(String[] aliases, String description) {
-        super(aliases, description);
+    public Pickup(String... aliases) {
+        super(aliases);
     }
 
     @Override

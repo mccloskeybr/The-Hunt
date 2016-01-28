@@ -5,8 +5,8 @@ import me.demerzel.util.Game;
 
 
 public class Crap extends Command {
-    public Crap(String[] aliases, String description) {
-        super(aliases, description);
+    public Crap(String... aliases) {
+        super(aliases);
     }
 
     @Override

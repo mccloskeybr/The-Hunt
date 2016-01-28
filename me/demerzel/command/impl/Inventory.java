@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 
 public class Inventory extends Command {
-    public Inventory(String[] aliases, String description) {
-        super(aliases, description);
+    public Inventory(String... aliases) {
+        super(aliases);
     }
 
     @Override

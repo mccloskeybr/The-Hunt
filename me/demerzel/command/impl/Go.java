@@ -6,8 +6,8 @@ import me.demerzel.util.Game;
 
 
 public class Go extends Command{
-    public Go(String[] aliases, String description) {
-        super(aliases, description);
+    public Go(String... aliases) {
+        super(aliases);
     }
 
     @Override

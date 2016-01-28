@@ -19,8 +19,8 @@ public class Dance extends Command {
             "You dance your pants off"
     };
 
-    public Dance(String[] aliases, String description) {
-        super(aliases, description);
+    public Dance(String... aliases) {
+        super(aliases);
     }
 
     @Override
