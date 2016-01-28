@@ -1,5 +1,7 @@
 package me.demerzel.location;
 
+import me.demerzel.entity.Entity;
+import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 
@@ -10,24 +12,26 @@ import java.util.HashMap;
 public abstract class Location {
     private String title;
     private String description;
-    private HashMap<Integer, String> examineText;
+    private HashMap<Integer, String> states;
     private int state;
     private ArrayList<Exit> exits;
     private ArrayList<Item> items;
     private ArrayList<Item> usableItems;
+    private ArrayList<EntityMob> mobs;
 
-    public Location(String title, String description, HashMap<Integer, String> examineText, int state, ArrayList<Exit> exits, ArrayList<Item> items, ArrayList<Item> usableItems) {
+    public Location(String title, String description, HashMap<Integer, String> states, int state, ArrayList<Exit> exits, ArrayList<Item> items, ArrayList<Item> usableItems, ArrayList<EntityMob> mobs) {
         this.title = title;
         this.description = description;
-        this.examineText = examineText;
+        this.states = states;
         this.state = state;
         this.exits = exits;
         this.items = items;
         this.usableItems = usableItems;
+        this.mobs = mobs;
     }
 
     public Location(String title, String description){
-        this(title, description, new HashMap<Integer, String>(), 1, new ArrayList<Exit>(), new ArrayList<Item>(), new ArrayList<>());
+        this(title, description, new HashMap<Integer, String>(), 1, new ArrayList<Exit>(), new ArrayList<Item>(), new ArrayList<>(), new ArrayList<>());
     }
 
     public String toString(){
@@ -73,8 +77,8 @@ public abstract class Location {
     }
 
     public void removeItem(Item item){
-        if(this.items.contains(item)){
-            this.items.remove(item);
+        if(items.contains(item)){
+            items.remove(item);
         }
     }
 
@@ -87,7 +91,7 @@ public abstract class Location {
     }
 
     public void removeUsableItem(Item item){
-        if(this.usableItems.contains(item)){
+        if(usableItems.contains(item)){
             usableItems.remove(item);
         }
     }
@@ -104,15 +108,15 @@ public abstract class Location {
     }
 
     public HashMap getStates() {
-        return examineText;
+        return states;
     }
 
     public String getCurrentState(){
-        return this.examineText.get(new Integer(this.state));
+        return states.get(new Integer(this.state));
     }
 
     public void addState(int state, String description){
-        this.examineText.put(state, description);
+        this.states.put(state, description);
     }
 
     public int getState() {
@@ -121,6 +125,30 @@ public abstract class Location {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public ArrayList<EntityMob> getMobs(){
+        return mobs;
+    }
+
+    public EntityMob getMob(int uid){
+        for(EntityMob mob:mobs){
+            if(mob.getUid() == uid){
+                return mob;
+            }
+        }
+
+        return null;
+    }
+
+    public void addMob(EntityMob mob){
+        mobs.add(mob);
+    }
+
+    public void removeMob(EntityMob mob){
+        if(mobs.contains(mob)){
+            mobs.remove(mob);
+        }
     }
 
     public abstract void run(EntityPlayer player);

@@ -2,6 +2,7 @@ package me.demerzel.util;
 
 import me.demerzel.command.Command;
 import me.demerzel.command.CommandFactory;
+import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.impl.Helmet;
 import me.demerzel.item.impl.Revolver;
@@ -71,14 +72,24 @@ public class Game {
         System.out.println(player.getLocation().getDescription() + "\n");
         System.out.println("Possible exits:");
 
-        ArrayList exits = player.getLocation().getExits();
-        for(Object o: exits){
-            Exit exit = (Exit) o;
+        ArrayList<Exit> exits = player.getLocation().getExits();
+        for(Exit exit: exits){
             if(exit.getActive()){
                 System.out.println(exit.toString());
             }
         }
 
+        showEnemies();
+
+    }
+
+    public static void showEnemies(){
+        if(player.getLocation().getMobs().size() > 0){
+            System.out.println("\nEnemies in room:");
+            for(EntityMob mob: player.getLocation().getMobs()){
+                System.out.println("[" + mob.getUid() + "] " + mob.getName() + " [HP: " + mob.getHealth() + " | Damage: " + mob.getStrength() + "]");
+            }
+        }
     }
 
     private static boolean action(){

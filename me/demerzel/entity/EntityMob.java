@@ -13,6 +13,8 @@ import java.util.HashMap;
 public abstract class EntityMob extends Entity {
     private int expRewarded;
     private int strength;
+    private int uid;
+    private static int count = 1;
     private ArrayList<Item> loot;
 
     public EntityMob(String name, String bio, int health, int mana, int speed, Location location, int expRewarded, int strength) {
@@ -20,6 +22,9 @@ public abstract class EntityMob extends Entity {
         this.loot = new ArrayList<>();
         this.expRewarded = expRewarded;
         this.strength = strength;
+
+        this.uid = count;
+        count++;
     }
 
     public int getExpRewarded() {
@@ -36,6 +41,14 @@ public abstract class EntityMob extends Entity {
 
     public void setStrength(int strength) {
         this.strength = strength;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public int getCount(){
+        return count;
     }
 
     public ArrayList<Item> getLoot() {

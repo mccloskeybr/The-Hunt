@@ -21,6 +21,8 @@ public class EntityPlayer extends Entity {
         super(name, bio, 20, 10, 4, location);
         inventory = new ArrayList<>();
         equipped = new HashMap<>();
+        wallet = 100;
+        pooped = false;
     }
 
     public int getMoney() {

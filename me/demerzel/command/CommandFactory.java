@@ -22,6 +22,8 @@ public class CommandFactory {
             return new Use();
         }else if(cmd.equalsIgnoreCase("equip")){
             return new Equip();
+        }else if(cmd.equalsIgnoreCase("attack")){
+            return new Attack();
         }
 
         return null;

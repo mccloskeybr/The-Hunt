@@ -11,17 +11,19 @@ import me.demerzel.util.Game;
  */
 public class Guard extends EntityMob {
     public Guard(Location location) {
-        super("Guard", "A generic guard", 10, 0, 4, location, 5, 3);
+        super("Guard", "A generic guard", 20, 0, 4, location, 5, 3);
         addLoot(new Revolver());
     }
+
 
     @Override
     public void onDefeat() {
         for(Item item:this.getLoot()){
             Game.getPlayer().addItem(item);
+            System.out.println("Looted " + item.getName() + " from " + getName());
         }
 
         Game.getPlayer().modExperience(getExpRewarded());
-        System.out.println("You have defeated " + getName());
+        System.out.println("Gained " + getExpRewarded() + " EXP!");
     }
 }
