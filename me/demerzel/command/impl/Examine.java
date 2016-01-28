@@ -6,6 +6,10 @@ import me.demerzel.util.Game;
 
 
 public class Examine extends Command {
+    public Examine(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         Location location = Game.getPlayer().getLocation();

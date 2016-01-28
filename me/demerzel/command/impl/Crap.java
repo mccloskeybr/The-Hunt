@@ -5,6 +5,10 @@ import me.demerzel.util.Game;
 
 
 public class Crap extends Command {
+    public Crap(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         if(!Game.getPlayer().isPooped()){

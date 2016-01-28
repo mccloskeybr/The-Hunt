@@ -18,6 +18,8 @@ public class Guard extends EntityMob {
 
     @Override
     public void onDefeat() {
+        System.out.println("You have defeated the " + getName());
+
         for(Item item:this.getLoot()){
             Game.getPlayer().addItem(item);
             System.out.println("Looted " + item.getName() + " from " + getName());

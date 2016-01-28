@@ -6,6 +6,10 @@ import me.demerzel.util.Game;
 
 
 public class Go extends Command{
+    public Go(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         String direction = args[1];

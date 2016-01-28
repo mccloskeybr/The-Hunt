@@ -8,6 +8,10 @@ import me.demerzel.util.Game;
 
 
 public class Pickup extends Command {
+    public Pickup(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         EntityPlayer player = Game.getPlayer();

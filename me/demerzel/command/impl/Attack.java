@@ -9,6 +9,10 @@ import me.demerzel.util.Game;
  * Created by Demerzel on 1/28/16.
  */
 public class Attack extends Command {
+    public Attack(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         try{
@@ -23,9 +27,8 @@ public class Attack extends Command {
 
             target.modHealth(-1 * player.getAttack());
             if(target.getHealth() <= 0){
-                Game.getPlayer().getLocation().removeMob(target);
-                System.out.println("You have defeated the " + target.getName());
                 target.onDefeat();
+                Game.getPlayer().getLocation().removeMob(target);
             }
 
             System.out.println();

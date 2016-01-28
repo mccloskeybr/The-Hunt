@@ -1,7 +1,8 @@
 package me.demerzel.util;
 
 import me.demerzel.command.Command;
-import me.demerzel.command.CommandFactory;
+import me.demerzel.command.Commands;
+import me.demerzel.command.impl.Attack;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.impl.Helmet;
@@ -20,33 +21,15 @@ import java.util.Scanner;
 public class Game {
     private static String command;
 
-    private static CommandFactory factory = new CommandFactory();
+    private static Commands factory = new Commands();
     private static EntityPlayer player;
 
     public static void main(String[] args) {
-        Location start = new Start();
-        Location ventEntrance = new VentEntrance();
-        Location ventWest = new VentWest();
-        Location ventEast = new VentEast();
-
-        start.addExit(new Exit(Exit.WEST, ventEntrance, true));
-        ventEntrance.addExit(new Exit(Exit.WEST, ventWest, true));
-        ventEntrance.addExit(new Exit(Exit.EAST, ventEast, true));
-        ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
-        ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
-
-        player = new EntityPlayer("Sergeant Wolf", "A badass sergenat", start);
-
-        start.addItem(new Revolver());
-        start.addItem(new Sledgehammer());
-        start.addItem(new Helmet());
-
-        start.addUsableItem(new Revolver());
-
         //Begin game
         System.out.println("Welcome to The Hunt");
         command = cmd("Enter <Start> to begin!");
         if(command.equalsIgnoreCase("start")){
+            setup();
             begin();
         }
     }
@@ -65,6 +48,28 @@ public class Game {
         }
 
         System.out.println("Your player's health has reached zero! Game Over! Retry?");
+    }
+
+    public static void setup(){
+        Location start = new Start();
+        Location ventEntrance = new VentEntrance();
+        Location ventWest = new VentWest();
+        Location ventEast = new VentEast();
+
+        start.addExit(new Exit(Exit.WEST, ventEntrance, true));
+        ventEntrance.addExit(new Exit(Exit.WEST, ventWest, true));
+        ventEntrance.addExit(new Exit(Exit.EAST, ventEast, true));
+        ventEntrance.addExit(new Exit(Exit.SOUTH, start, true));
+        ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
+        ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
+
+        player = new EntityPlayer("Sergeant Wolf", "A badass sergenat", start);
+
+        start.addItem(new Revolver());
+        start.addItem(new Sledgehammer());
+        start.addItem(new Helmet());
+
+        start.addUsableItem(new Revolver());
     }
 
     public static void showLocation(){

@@ -8,6 +8,10 @@ import me.demerzel.location.Location;
 import me.demerzel.util.Game;
 
 public class Use extends Command {
+    public Use(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         EntityPlayer player = Game.getPlayer();

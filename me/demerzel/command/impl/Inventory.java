@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 
 public class Inventory extends Command {
+    public Inventory(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         EntityPlayer player = Game.getPlayer();

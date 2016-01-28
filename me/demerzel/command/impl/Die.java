@@ -5,6 +5,10 @@ import me.demerzel.util.Game;
 
 
 public class Die extends Command {
+    public Die(String[] aliases, String description) {
+        super(aliases, description);
+    }
+
     @Override
     public boolean execute(String[] args) {
         System.out.println("You suddenly drop dead. ");
