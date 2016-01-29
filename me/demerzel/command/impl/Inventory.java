@@ -16,6 +16,7 @@ public class Inventory extends Command {
 
     @Override
     public boolean execute(String[] args, EntityPlayer player) {
+        System.out.println("You are " + player.getName() + ", " + player.getBio());
         System.out.println("Current HP: " + player.getHealth());
         System.out.println("Current Mana: " + player.getMana());
         System.out.println("Current Attack: " + player.getAttack());

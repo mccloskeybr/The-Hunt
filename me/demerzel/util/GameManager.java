@@ -58,7 +58,7 @@ public class GameManager {
         ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
         ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
 
-        player = new EntityPlayer("Sergeant Wolf", "A badass sergenat", start);
+        player = new EntityPlayer("Sergeant Wolf", "A badass sergeant", start);
     }
 
     public void showLocation(){
