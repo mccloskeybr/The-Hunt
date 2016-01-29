@@ -3,6 +3,7 @@ package me.demerzel.command.impl;
 import me.demerzel.command.Command;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
+import me.demerzel.entity.Runnable;
 import me.demerzel.util.GameManager;
 
 /**
@@ -29,6 +30,9 @@ public class Attack extends Command {
             target.modHealth(-1 * player.getAttack());
             if(target.getHealth() <= 0){
                 target.onDefeat();
+                if(target instanceof Runnable){
+                    ((Runnable) target).run();
+                }
                 player.getLocation().removeMob(target);
             }
 

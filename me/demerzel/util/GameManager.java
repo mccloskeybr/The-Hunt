@@ -1,7 +1,7 @@
 package me.demerzel.util;
 
 import me.demerzel.command.Command;
-import me.demerzel.command.Commands;
+import me.demerzel.command.CommandManager;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.impl.*;
@@ -13,14 +13,17 @@ import me.demerzel.location.impl.VentWest;
 import me.demerzel.location.Exit;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GameManager {
     private static GameManager gameManager;
     private static String command;
 
-    private static Commands factory = new Commands();
+    private static CommandManager factory = new CommandManager();
     private static EntityPlayer player;
+
+    private GameManager(){
+
+    }
 
     public static GameManager getInstance(){
         if(gameManager != null){

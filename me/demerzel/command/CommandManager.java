@@ -4,10 +4,10 @@ import me.demerzel.command.impl.*;
 
 import java.util.HashMap;
 
-public class Commands {
+public class CommandManager {
     private HashMap<String, Command> commandHashMap;
 
-    public Commands(){
+    public CommandManager(){
         commandHashMap = new HashMap<>();
 
         new Attack("attack").setDescription("Attack an entity. Usage: attack <integer>").register(this);

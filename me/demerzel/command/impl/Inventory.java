@@ -20,7 +20,8 @@ public class Inventory extends Command {
         System.out.println("Current Mana: " + player.getMana());
         System.out.println("Current Attack: " + player.getAttack());
         System.out.println("Current Armor: " + player.getArmor());
-        System.out.println("EXP: " + player.getExperience() + "\n");
+        System.out.println("Current Level: " + player.getLevel());
+        System.out.println("Current EXP: " + player.getExperience() + "\n");
 
         if(player.getInventory().size() > 0){
             System.out.println("Your current inventory:");

@@ -25,6 +25,11 @@ public class EntityPlayer extends Entity {
         pooped = false;
     }
 
+    @Override
+    public int getHealth(){
+        return (int) (super.getHealth() + (Math.log10(getLevel()) * 20));
+    }
+
     public int getMoney() {
         return wallet;
     }
@@ -46,6 +51,12 @@ public class EntityPlayer extends Entity {
     }
 
     public void modExperience(int amt){
+        if(getLevel(getExperience() + amt) > getLevel()){
+            System.out.println("=========================");
+            System.out.println("  Level Up! New Level: " + (getLevel() + 1));
+            System.out.println("=========================");
+        }
+
         this.experience += amt;
     }
 
@@ -59,12 +70,12 @@ public class EntityPlayer extends Entity {
     }
 
     public int getAttack(){
-        int attack = 0;
+        int attack = 1;
         for(HashMap.Entry<ItemSlot, Item> entry: getEquipped().entrySet()){
             attack += entry.getValue().getDamage();
         }
 
-        return attack;
+        return (int) (attack + (Math.log10(getLevel()) * 10));
     }
 
     public boolean isPooped() {
@@ -109,5 +120,13 @@ public class EntityPlayer extends Entity {
     public void unequip(Item item){
         equipped.remove(item.getSlot(), item);
         inventory.add(item);
+    }
+
+    public int getLevel(){
+        return (int) (Math.sqrt(100 * (2 * getExperience() + 25)) + 50) / 100;
+    }
+
+    public int getLevel(int experience){
+        return (int) (Math.sqrt(100 * (2 * experience + 25)) + 50) / 100;
     }
 }

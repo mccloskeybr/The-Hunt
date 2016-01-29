@@ -74,7 +74,7 @@ public abstract class EntityMob extends Entity {
             System.out.println("Looted " + item.getName() + " from " + getName());
         }
 
-        GameManager.getInstance().getPlayer().modExperience(getExpRewarded());
         System.out.println("Gained " + getExpRewarded() + " EXP!");
+        GameManager.getInstance().getPlayer().modExperience(getExpRewarded());
     }
 }

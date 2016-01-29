@@ -13,7 +13,7 @@ public abstract class Command {
 
     public abstract boolean execute(String[] args, EntityPlayer player);
 
-    public void register(Commands commandManager){
+    public void register(CommandManager commandManager){
         for(String name : aliases){
             commandManager.add(name, this);
         }

@@ -86,4 +86,8 @@ public abstract class Entity {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public void say(String out){
+        System.out.println("<" + getName() + ">: " + out);
+    }
 }

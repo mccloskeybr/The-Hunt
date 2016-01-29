@@ -3,6 +3,7 @@ package me.demerzel.command.impl;
 import me.demerzel.command.Command;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
+import me.demerzel.entity.Runnable;
 import me.demerzel.location.Location;
 import me.demerzel.util.GameManager;
 
@@ -35,6 +36,9 @@ public class Dance extends Command {
             ArrayList<EntityMob> toRemove = new ArrayList<>();
             for(EntityMob mob: location.getMobs()){
                 mob.onDefeat();
+                if(mob instanceof Runnable){
+                    ((Runnable) mob).run();
+                }
                 toRemove.add(mob);
             }
 
