@@ -22,7 +22,7 @@ public class Go extends Command{
                 if(exit.getActive()){
                     player.setLocation(exit.getLeadsTo());
 
-                    if(location instanceof Runnable){
+                    if(player.getLocation() instanceof Runnable){
                         ((Runnable) player.getLocation()).run(player);
                     }
 

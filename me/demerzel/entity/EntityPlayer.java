@@ -53,7 +53,7 @@ public class EntityPlayer extends Entity {
     public void modExperience(int amt){
         if(getLevel(getExperience() + amt) > getLevel()){
             System.out.println("=========================");
-            System.out.println("  Level Up! New Level: " + (getLevel() + 1));
+            System.out.println("  Level Up! New Level: " + (getLevel(getExperience() + amt)));
             System.out.println("=========================");
         }
 
