@@ -4,6 +4,7 @@ import me.demerzel.entity.EntityPlayer;
 import me.demerzel.entity.impl.Dragon;
 import me.demerzel.entity.impl.ExpTester;
 import me.demerzel.entity.impl.Guard;
+import me.demerzel.item.impl.Sledgehammer;
 import me.demerzel.location.Location;
 
 
@@ -14,5 +15,7 @@ public class Start extends Location{
         addState(1, "Start Examine Text");
         addMob(new Guard(this));
         addMob(new Guard(this));
+
+        addItem(new Sledgehammer());
     }
 }

@@ -10,8 +10,9 @@ public abstract class Item {
     private String useText;
     private boolean permanent;
     private ItemSlot slot;
+    private ItemType type;
 
-    public Item(int id, int armor, int damage, String name, String description, String useText, boolean permanent, ItemSlot slot){
+    public Item(int id, int armor, int damage, String name, String description, String useText, boolean permanent, ItemSlot slot, ItemType type){
         this.id = id;
         this.name = name;
         this.armor = armor;
@@ -20,10 +21,11 @@ public abstract class Item {
         this.useText = useText;
         this.permanent = permanent;
         this.slot = slot;
+        this.type = type;
     }
 
     public Item(){
-        this(0, 0, 0, "Null item", "Null desc", "Nothing", true, ItemSlot.DEFAULT);
+        this(0, 0, 0, "Null item", "Null desc", "Nothing", true, ItemSlot.DEFAULT, ItemType.DEFAULT);
     }
 
     public String toString(){
@@ -92,5 +94,13 @@ public abstract class Item {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public void setType(ItemType type) {
+        this.type = type;
     }
 }

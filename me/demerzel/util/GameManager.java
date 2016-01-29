@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class GameManager {
     private static GameManager gameManager;
-    private static String command;
 
     private static CommandManager factory = new CommandManager();
     private static EntityPlayer player;
@@ -58,12 +57,6 @@ public class GameManager {
         ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
 
         player = new EntityPlayer("Sergeant Wolf", "A badass sergenat", start);
-
-        start.addItem(new Revolver());
-        start.addItem(new Sledgehammer());
-        start.addItem(new Helmet());
-
-        start.addUsableItem(new Revolver());
     }
 
     public void showLocation(){
@@ -75,7 +68,6 @@ public class GameManager {
         exits.stream().filter(Exit::getActive).forEach(exit -> System.out.println(exit.toString()));
 
         showEnemies();
-
     }
 
     public void showEnemies(){
@@ -88,7 +80,7 @@ public class GameManager {
     }
 
     public boolean action(){
-        command = Utilities.cmd("");
+        String command = Utilities.cmd("");
         String[] args = command.split("\\s+");
         Command cmd = factory.getCommand(args[0]);
         if(cmd != null){

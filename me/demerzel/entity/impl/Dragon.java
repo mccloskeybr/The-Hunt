@@ -1,13 +1,15 @@
 package me.demerzel.entity.impl;
 
+import me.demerzel.entity.Attackable;
 import me.demerzel.entity.EntityMob;
-import me.demerzel.entity.Runnable;
+import me.demerzel.entity.EntityPlayer;
+import me.demerzel.entity.EventKilled;
 import me.demerzel.location.Location;
 
 /**
  * Created by Demerzel on 1/28/16.
  */
-public class Dragon extends EntityMob implements Runnable{
+public class Dragon extends EntityMob implements EventKilled, Attackable{
     public Dragon(Location location) {
         super("The Dragon", "The Final Boss", 300, 500, 7, location, 1000, 30);
     }
@@ -52,6 +54,19 @@ public class Dragon extends EntityMob implements Runnable{
             System.out.println("===========================");
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void attack(EntityPlayer player) {
+        System.out.println("The Dragon breathes fire at you. You offer him a breath mint, but he declines.");
+        double d = Math.random();
+        if(d >= 0.3){
+            int damage = getStrength() - player.getArmor();
+            player.modHealth(-damage);
+            System.out.println("You took " + damage + " damage!");
+        }else{
+            System.out.println("But he misses somehow. What a jerk!");
         }
     }
 }

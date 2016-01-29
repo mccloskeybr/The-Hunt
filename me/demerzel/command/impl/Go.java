@@ -1,6 +1,8 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
+import me.demerzel.entity.Attackable;
+import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.location.Exit;
 import me.demerzel.location.Location;
@@ -27,6 +29,11 @@ public class Go extends Command{
                     }
 
                     GameManager.getInstance().showLocation();
+
+                    if(player.getLocation().getMobs().size() > 0){
+                        player.getLocation().getMobs().stream().filter(mob -> mob.getSpeed() > player.getSpeed()).filter(mob -> mob instanceof Attackable).forEach(mob -> ((Attackable) mob).attack(player));
+                    }
+
 
                     return true;
                 }
