@@ -2,6 +2,7 @@ package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
+import me.demerzel.entity.EntityType;
 import me.demerzel.entity.EventKilled;
 import me.demerzel.location.Location;
 import me.demerzel.util.GameManager;
@@ -13,7 +14,7 @@ import java.util.Random;
  */
 public class Bomber extends EntityMob implements EventKilled {
     public Bomber(Location location) {
-        super("Bomber", "An enemy with suicidal tendencies. If they spot you, they'll rush at you.", 5, 0, 6, location, 3, 2, 50, "The Bomber rushes at you! He explodes!");
+        super("Bomber", "An enemy with suicidal tendencies. If they spot you, they'll rush at you.", 5, 0, 6, location, 3, 2, 50, "The Bomber rushes at you! He explodes!", EntityType.HOSTILE);
     }
 
     @Override

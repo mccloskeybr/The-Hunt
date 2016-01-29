@@ -2,6 +2,7 @@ package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
+import me.demerzel.entity.EntityType;
 import me.demerzel.entity.EventKilled;
 import me.demerzel.location.Location;
 
@@ -10,7 +11,7 @@ import me.demerzel.location.Location;
  */
 public class Dragon extends EntityMob implements EventKilled{
     public Dragon(Location location) {
-        super("The Dragon", "The Final Boss", 300, 500, 7, location, 1000, 4000, 30, "The Dragon breathes fire at you! You offer him a breath mint, but he declines.");
+        super("The Dragon", "The Final Boss", 300, 500, 7, location, 1000, 4000, 30, "The Dragon breathes fire at you! You offer him a breath mint, but he declines.", EntityType.HOSTILE);
     }
 
     @Override

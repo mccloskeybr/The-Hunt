@@ -1,6 +1,7 @@
 package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
+import me.demerzel.entity.EntityType;
 import me.demerzel.entity.Interactable;
 import me.demerzel.item.Item;
 import me.demerzel.item.impl.Helmet;
@@ -16,7 +17,7 @@ public class Shopkeeper extends EntityMob implements Interactable{
     private boolean isAttacked;
 
     public Shopkeeper(Location location) {
-        super("The Shopkeeper", "A man born to sell goods. When you buy his stuff, you give him purpose in life.", 5, 0, 1, location, 100000, 2000, 1, "The Shopkeeper punches you in the nose!");
+        super("The Shopkeeper", "A man born to sell goods. When you buy his stuff, you give him purpose in life.", 5, 0, 1, location, 100000, 2000, 1, "The Shopkeeper punches you in the nose!", EntityType.NEUTRAL);
 
         addLoot(new Revolver());
         addLoot(new Sledgehammer());
@@ -26,14 +27,14 @@ public class Shopkeeper extends EntityMob implements Interactable{
     @Override
     public void onDefeat(){
         System.out.println("You killed the shopkeeper! Murderer!");
-        System.out.println("On the bright side, you found " + getMoneyRewarded() + " coins. Enjoy the bloodmoney...");
+        System.out.println("On the bright side, you found " + getMoneyRewarded() + " coins and " + getExpRewarded() + " EXP. Enjoy the bloodmoney...");
         GameManager.getInstance().getPlayer().modMoney(getMoneyRewarded());
         GameManager.getInstance().getPlayer().modExperience(getExpRewarded());
     }
 
     @Override
     public void interact() {
-        if(!isAttacked()){
+        if(getType() == EntityType.NEUTRAL){
             say("Hello! Welcome to Generic Shop!");
             say("What would you like to buy?");
             for (Item item : getLoot()){

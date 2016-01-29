@@ -17,14 +17,16 @@ public abstract class Entity {
     private int mana;
     private int speed;
     private Location location;
+    private EntityType type;
 
-    public Entity(String name, String bio, int health, int mana, int speed, Location location) {
+    public Entity(String name, String bio, int health, int mana, int speed, Location location, EntityType type) {
         this.name = name;
         this.bio = bio;
         this.health = health;
         this.mana = mana;
         this.speed = speed;
         this.location = location;
+        this.type = type;
     }
 
     public String getName() {
@@ -77,6 +79,14 @@ public abstract class Entity {
 
     public void modSpeed(int amt){
         this.speed += amt;
+    }
+
+    public EntityType getType() {
+        return type;
+    }
+
+    public void setType(EntityType type) {
+        this.type = type;
     }
 
     public Location getLocation() {

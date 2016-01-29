@@ -1,6 +1,7 @@
 package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
+import me.demerzel.entity.EntityType;
 import me.demerzel.location.Location;
 
 /**
@@ -8,6 +9,6 @@ import me.demerzel.location.Location;
  */
 public class HeavyGuard extends EntityMob {
     public HeavyGuard(Location location) {
-        super("Heavy Guard", "A guard with some armor. Also needs to lose a few pounds.", 30, 0, 3, location, 8, 30, 5, "The Heavy Guard fires his pistol at you!");
+        super("Heavy Guard", "A guard with some armor. Also needs to lose a few pounds.", 30, 0, 3, location, 8, 30, 5, "The Heavy Guard fires his pistol at you!", EntityType.HOSTILE);
     }
 }

@@ -3,6 +3,7 @@ package me.demerzel.command.impl;
 import me.demerzel.command.Command;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
+import me.demerzel.entity.EntityType;
 import me.demerzel.entity.EventKilled;
 import me.demerzel.entity.impl.Shopkeeper;
 import me.demerzel.item.ItemSlot;
@@ -36,6 +37,7 @@ public class Attack extends Command {
                     }
 
                     target.modHealth(- player.getAttack());
+                    target.setType(EntityType.HOSTILE);
                     System.out.println(target.getName() + " took " + player.getAttack() + " damage!");
                     if(target.getHealth() <= 0){
                         target.onDefeat();
@@ -45,9 +47,6 @@ public class Attack extends Command {
                         player.getLocation().removeMob(target);
                     }else{
                         target.attack(player);
-                        if(target instanceof Shopkeeper){
-                            ((Shopkeeper) target).setAttacked(true);
-                        }
                     }
 
                     System.out.println();
@@ -61,6 +60,7 @@ public class Attack extends Command {
 
                 for(EntityMob mob : player.getLocation().getMobs()){
                     mob.modHealth(- player.getAttack());
+                    mob.setType(EntityType.HOSTILE);
                     System.out.println(mob.getName() + " took " + player.getAttack() + " damage!");
                     if(mob.getHealth() <= 0){
                         mob.onDefeat();
@@ -70,9 +70,6 @@ public class Attack extends Command {
                         toRemove.add(mob);
                     }else{
                         mob.attack(player);
-                        if(mob instanceof Shopkeeper){
-                            ((Shopkeeper) mob).setAttacked(true);
-                        }
                     }
                 }
 
