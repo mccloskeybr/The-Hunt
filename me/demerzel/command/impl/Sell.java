@@ -1,6 +1,7 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
+import me.demerzel.entity.EntityPlayer;
 
 
 public class Sell extends Command {
@@ -9,7 +10,7 @@ public class Sell extends Command {
     }
 
     @Override
-    public boolean execute(String[] args) {
+    public boolean execute(String[] args, EntityPlayer player) {
         return false;
     }
 }

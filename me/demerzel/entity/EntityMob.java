@@ -3,6 +3,7 @@ package me.demerzel.entity;
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
 import me.demerzel.location.Location;
+import me.demerzel.util.GameManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,5 +66,15 @@ public abstract class EntityMob extends Entity {
         }
     }
 
-    public abstract void onDefeat();
+    public void onDefeat() {
+        System.out.println("You have defeated the " + getName());
+
+        for(Item item:this.getLoot()){
+            GameManager.getInstance().getPlayer().addItem(item);
+            System.out.println("Looted " + item.getName() + " from " + getName());
+        }
+
+        GameManager.getInstance().getPlayer().modExperience(getExpRewarded());
+        System.out.println("Gained " + getExpRewarded() + " EXP!");
+    }
 }

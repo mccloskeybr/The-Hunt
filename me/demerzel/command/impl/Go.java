@@ -1,8 +1,11 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
+import me.demerzel.entity.EntityPlayer;
 import me.demerzel.location.Exit;
-import me.demerzel.util.Game;
+import me.demerzel.location.Location;
+import me.demerzel.location.Runnable;
+import me.demerzel.util.GameManager;
 
 
 public class Go extends Command{
@@ -11,14 +14,19 @@ public class Go extends Command{
     }
 
     @Override
-    public boolean execute(String[] args) {
+    public boolean execute(String[] args, EntityPlayer player) {
         String direction = args[1];
-        for (Exit exit : Game.getPlayer().getLocation().getExits()) {
+        Location location = player.getLocation();
+        for (Exit exit : location.getExits()) {
             if (exit.getDirectionName().equalsIgnoreCase(direction)) {
                 if(exit.getActive()){
-                    Game.getPlayer().setLocation(exit.getLeadsTo());
-                    Game.getPlayer().getLocation().run(Game.getPlayer());
-                    Game.showLocation();
+                    player.setLocation(exit.getLeadsTo());
+
+                    if(location instanceof Runnable){
+                        ((Runnable) player.getLocation()).run(player);
+                    }
+
+                    GameManager.getInstance().showLocation();
 
                     return true;
                 }

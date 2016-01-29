@@ -150,6 +150,4 @@ public abstract class Location {
             mobs.remove(mob);
         }
     }
-
-    public abstract void run(EntityPlayer player);
 }

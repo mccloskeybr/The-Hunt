@@ -3,7 +3,7 @@ package me.demerzel.command.impl;
 import me.demerzel.command.Command;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
-import me.demerzel.util.Game;
+import me.demerzel.util.GameManager;
 
 /**
  * Created by Demerzel on 1/28/16.
@@ -14,10 +14,11 @@ public class Attack extends Command {
     }
 
     @Override
-    public boolean execute(String[] args) {
+    public boolean execute(String[] args, EntityPlayer player) {
+        GameManager gameManager = GameManager.getInstance();
+
         try{
             int arg = Integer.parseInt(args[1]);
-            EntityPlayer player = Game.getPlayer();
             EntityMob target = player.getLocation().getMob(arg);
 
             if(target == null){
@@ -28,11 +29,11 @@ public class Attack extends Command {
             target.modHealth(-1 * player.getAttack());
             if(target.getHealth() <= 0){
                 target.onDefeat();
-                Game.getPlayer().getLocation().removeMob(target);
+                player.getLocation().removeMob(target);
             }
 
             System.out.println();
-            Game.showEnemies();
+            gameManager.showEnemies();
         }catch(Exception e){
             System.out.println("Enter a number.");
             return false;

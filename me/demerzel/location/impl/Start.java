@@ -13,9 +13,4 @@ public class Start extends Location{
         addMob(new Guard(this));
         addMob(new Guard(this));
     }
-
-    @Override
-    public void run(EntityPlayer player) {
-
-    }
 }

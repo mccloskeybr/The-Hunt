@@ -4,7 +4,7 @@ import me.demerzel.command.Command;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.location.Location;
-import me.demerzel.util.Game;
+import me.demerzel.util.GameManager;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,9 +24,8 @@ public class Dance extends Command {
     }
 
     @Override
-    public boolean execute(String[] args) {
+    public boolean execute(String[] args, EntityPlayer player) {
         Random rand = new Random();
-        EntityPlayer player = Game.getPlayer();
         Location location = player.getLocation();
         System.out.println(danceMoves[rand.nextInt(danceMoves.length)]);
 
@@ -40,7 +39,7 @@ public class Dance extends Command {
             }
 
             location.getMobs().removeAll(toRemove);
-            Game.showEnemies();
+            GameManager.getInstance().showEnemies();
         }
         return false;
     }

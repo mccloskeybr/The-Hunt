@@ -5,7 +5,7 @@ import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 import me.demerzel.item.Usable;
 import me.demerzel.location.Location;
-import me.demerzel.util.Game;
+import me.demerzel.util.GameManager;
 
 public class Use extends Command {
     public Use(String... aliases) {
@@ -13,8 +13,7 @@ public class Use extends Command {
     }
 
     @Override
-    public boolean execute(String[] args) {
-        EntityPlayer player = Game.getPlayer();
+    public boolean execute(String[] args, EntityPlayer player) {
         Location location = player.getLocation();
         for(Item item : player.getInventory()){
             if(item instanceof Usable){

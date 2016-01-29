@@ -4,7 +4,7 @@ import me.demerzel.command.Command;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
-import me.demerzel.util.Game;
+import me.demerzel.util.GameManager;
 
 import java.util.HashMap;
 
@@ -15,8 +15,7 @@ public class Inventory extends Command {
     }
 
     @Override
-    public boolean execute(String[] args) {
-        EntityPlayer player = Game.getPlayer();
+    public boolean execute(String[] args, EntityPlayer player) {
         System.out.println("Current HP: " + player.getHealth());
         System.out.println("Current Mana: " + player.getMana());
         System.out.println("Current Attack: " + player.getAttack());
@@ -41,7 +40,7 @@ public class Inventory extends Command {
 
         if(player.getEquipped().size() > 0){
             System.out.println("\nEquipped items:");
-            for(HashMap.Entry<ItemSlot, Item> entry: Game.getPlayer().getEquipped().entrySet()){
+            for(HashMap.Entry<ItemSlot, Item> entry: player.getEquipped().entrySet()){
                 Item item = entry.getValue();
                 String output = item.getName();
                 if(item.getSlot() == ItemSlot.BACKUP || item.getSlot() == ItemSlot.WEAPON){

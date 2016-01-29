@@ -2,12 +2,9 @@ package me.demerzel.util;
 
 import me.demerzel.command.Command;
 import me.demerzel.command.Commands;
-import me.demerzel.command.impl.Attack;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
-import me.demerzel.item.impl.Helmet;
-import me.demerzel.item.impl.Revolver;
-import me.demerzel.item.impl.Sledgehammer;
+import me.demerzel.item.impl.*;
 import me.demerzel.location.Location;
 import me.demerzel.location.impl.Start;
 import me.demerzel.location.impl.VentEast;
@@ -18,29 +15,23 @@ import me.demerzel.location.Exit;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Game {
+public class GameManager {
+    private static GameManager gameManager;
     private static String command;
 
     private static Commands factory = new Commands();
     private static EntityPlayer player;
 
-    public static void main(String[] args) {
-        //Begin game
-        System.out.println("Welcome to The Hunt");
-        command = cmd("Enter <Start> to begin!");
-        if(command.equalsIgnoreCase("start")){
-            setup();
-            begin();
+    public static GameManager getInstance(){
+        if(gameManager != null){
+            return gameManager;
         }
+
+        gameManager = new GameManager();
+        return gameManager;
     }
 
-    private static String cmd(String output){
-        System.out.println(output);
-        Scanner input = new Scanner(System.in);
-        return input.nextLine();
-    }
-
-    private static void begin(){
+    public void begin(){
         showLocation();
 
         while(player.getHealth() > 0){
@@ -50,7 +41,7 @@ public class Game {
         System.out.println("Your player's health has reached zero! Game Over! Retry?");
     }
 
-    public static void setup(){
+    public void setup(){
         Location start = new Start();
         Location ventEntrance = new VentEntrance();
         Location ventWest = new VentWest();
@@ -72,23 +63,19 @@ public class Game {
         start.addUsableItem(new Revolver());
     }
 
-    public static void showLocation(){
+    public void showLocation(){
         System.out.println(player.getLocation().getTitle());
         System.out.println(player.getLocation().getDescription() + "\n");
         System.out.println("Possible exits:");
 
         ArrayList<Exit> exits = player.getLocation().getExits();
-        for(Exit exit: exits){
-            if(exit.getActive()){
-                System.out.println(exit.toString());
-            }
-        }
+        exits.stream().filter(Exit::getActive).forEach(exit -> System.out.println(exit.toString()));
 
         showEnemies();
 
     }
 
-    public static void showEnemies(){
+    public void showEnemies(){
         if(player.getLocation().getMobs().size() > 0){
             System.out.println("\nEnemies in room:");
             for(EntityMob mob: player.getLocation().getMobs()){
@@ -97,12 +84,12 @@ public class Game {
         }
     }
 
-    private static boolean action(){
-        command = cmd("");
+    public boolean action(){
+        command = Utilities.cmd("");
         String[] args = command.split("\\s+");
         Command cmd = factory.getCommand(args[0]);
         if(cmd != null){
-            cmd.execute(args);
+            cmd.execute(args, player);
             return true;
         }
 
@@ -110,7 +97,7 @@ public class Game {
         return true;
     }
 
-    public static EntityPlayer getPlayer(){
+    public EntityPlayer getPlayer(){
         return player;
     }
 }
