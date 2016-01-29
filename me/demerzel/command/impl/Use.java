@@ -14,6 +14,11 @@ public class Use extends Command {
 
     @Override
     public boolean execute(String[] args, EntityPlayer player) {
+        if(args.length < 2){
+            System.out.println("Use what?");
+            return false;
+        }
+
         Location location = player.getLocation();
         for(Item item : player.getInventory()){
             if(item instanceof Usable){

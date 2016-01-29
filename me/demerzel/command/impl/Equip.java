@@ -13,6 +13,11 @@ public class Equip extends Command {
 
     @Override
     public boolean execute(String[] args, EntityPlayer player) {
+        if(args.length < 2){
+            System.out.println("Equip what?");
+            return false;
+        }
+
         for(Item item: player.getInventory()){
             if(item.getName().equalsIgnoreCase(args[1])){
                 player.equip(item);
@@ -20,6 +25,8 @@ public class Equip extends Command {
                 return true;
             }
         }
+
+        System.out.println("You don't have that item!");
         return false;
     }
 }

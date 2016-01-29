@@ -37,7 +37,7 @@ public class Dance extends Command {
             for(EntityMob mob: location.getMobs()){
                 mob.onDefeat();
                 if(mob instanceof EventKilled){
-                    ((EventKilled) mob).run();
+                    ((EventKilled) mob).onDeath(player);
                 }
                 toRemove.add(mob);
             }

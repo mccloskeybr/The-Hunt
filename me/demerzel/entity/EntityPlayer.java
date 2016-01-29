@@ -18,7 +18,7 @@ public class EntityPlayer extends Entity {
     private HashMap<ItemSlot, Item> equipped;
 
     public EntityPlayer(String name, String bio, Location location) {
-        super(name, bio, 20, 10, 4, location);
+        super(name, bio, 30, 10, 4, location);
         inventory = new ArrayList<>();
         equipped = new HashMap<>();
         wallet = 100;

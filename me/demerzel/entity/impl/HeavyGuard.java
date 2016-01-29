@@ -8,6 +8,6 @@ import me.demerzel.location.Location;
  */
 public class HeavyGuard extends EntityMob {
     public HeavyGuard(Location location) {
-        super("Heavy Guard", "A guard with some armor. Also needs to lose a few pounds.", 30, 0, 3, location, 8, 5);
+        super("Heavy Guard", "A guard with some armor. Also needs to lose a few pounds.", 30, 0, 3, location, 8, 30, 5, "The Heavy Guard fires his pistol at you!");
     }
 }

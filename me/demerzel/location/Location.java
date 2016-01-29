@@ -1,8 +1,6 @@
 package me.demerzel.location;
 
-import me.demerzel.entity.Entity;
 import me.demerzel.entity.EntityMob;
-import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ public abstract class Location {
     }
 
     public Location(String title, String description){
-        this(title, description, new HashMap<Integer, String>(), 1, new ArrayList<Exit>(), new ArrayList<Item>(), new ArrayList<>(), new ArrayList<>());
+        this(title, description, new HashMap<>(), 1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     public String toString(){
@@ -112,7 +110,7 @@ public abstract class Location {
     }
 
     public String getCurrentState(){
-        return states.get(new Integer(this.state));
+        return states.get(this.state);
     }
 
     public void addState(int state, String description){

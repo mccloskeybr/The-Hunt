@@ -22,6 +22,7 @@ public class CommandManager {
         new Sell("sell").setDescription("Not currently in use.").register(this);
         new Use("use").setDescription("Use an item from your inventory. Usage: use <item>").register(this);
         new Wallet("wallet", "money").setDescription("View your wallet.").register(this);
+        new Buy("buy", "purchase").setDescription("Buy an item").register(this);
     }
 
     public Command getCommand(String cmd){

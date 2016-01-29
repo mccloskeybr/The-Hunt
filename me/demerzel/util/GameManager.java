@@ -4,12 +4,11 @@ import me.demerzel.command.Command;
 import me.demerzel.command.CommandManager;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
+import me.demerzel.entity.Interactable;
+import me.demerzel.entity.impl.Shopkeeper;
 import me.demerzel.item.impl.*;
 import me.demerzel.location.Location;
-import me.demerzel.location.impl.Start;
-import me.demerzel.location.impl.VentEast;
-import me.demerzel.location.impl.VentEntrance;
-import me.demerzel.location.impl.VentWest;
+import me.demerzel.location.impl.*;
 import me.demerzel.location.Exit;
 
 import java.util.ArrayList;
@@ -48,11 +47,14 @@ public class GameManager {
         Location ventEntrance = new VentEntrance();
         Location ventWest = new VentWest();
         Location ventEast = new VentEast();
+        Location store = new Store();
 
         start.addExit(new Exit(Exit.WEST, ventEntrance, true));
+        start.addExit(new Exit(Exit.NORTH, store, true));
+        store.addExit(new Exit(Exit.SOUTH, start, true));
         ventEntrance.addExit(new Exit(Exit.WEST, ventWest, true));
         ventEntrance.addExit(new Exit(Exit.EAST, ventEast, true));
-        ventEntrance.addExit(new Exit(Exit.SOUTH, start, true));
+        ventEntrance.addExit(new Exit(Exit.OUT, start, true));
         ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
         ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
 
@@ -72,9 +74,14 @@ public class GameManager {
 
     public void showEnemies(){
         if(player.getLocation().getMobs().size() > 0){
-            System.out.println("\nEnemies in room:");
+            System.out.println("\nEntities in room:");
             for(EntityMob mob: player.getLocation().getMobs()){
                 System.out.println("[" + mob.getUid() + "] " + mob.getName() + " [HP: " + mob.getHealth() + " | Damage: " + mob.getStrength() + "]");
+
+                if(mob instanceof Interactable){
+                    System.out.println();
+                    ((Interactable) mob).interact();
+                }
             }
         }
     }

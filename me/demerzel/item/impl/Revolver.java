@@ -8,7 +8,7 @@ import me.demerzel.item.Usable;
 
 public class Revolver extends Item implements Usable{
     public Revolver(){
-        super(2, 0, 5, "Revolver", "A heavy revolver.", "BANG BANG BANG!", true, ItemSlot.WEAPON, ItemType.SINGLETARGET);
+        super(2, 0, 5, 100, "Revolver", "A heavy revolver.", "BANG BANG BANG!", true, ItemSlot.WEAPON, ItemType.SINGLETARGET);
     }
 
     @Override

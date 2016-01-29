@@ -1,10 +1,10 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
-import me.demerzel.entity.Attackable;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.entity.EventKilled;
+import me.demerzel.entity.impl.Shopkeeper;
 import me.demerzel.item.ItemSlot;
 import me.demerzel.item.ItemType;
 import me.demerzel.util.GameManager;
@@ -36,15 +36,17 @@ public class Attack extends Command {
                     }
 
                     target.modHealth(- player.getAttack());
+                    System.out.println(target.getName() + " took " + player.getAttack() + " damage!");
                     if(target.getHealth() <= 0){
                         target.onDefeat();
                         if(target instanceof EventKilled){
-                            ((EventKilled) target).run();
+                            ((EventKilled) target).onDeath(player);
                         }
                         player.getLocation().removeMob(target);
                     }else{
-                        if(target instanceof Attackable){
-                            ((Attackable) target).attack(player);
+                        target.attack(player);
+                        if(target instanceof Shopkeeper){
+                            ((Shopkeeper) target).setAttacked(true);
                         }
                     }
 
@@ -59,16 +61,17 @@ public class Attack extends Command {
 
                 for(EntityMob mob : player.getLocation().getMobs()){
                     mob.modHealth(- player.getAttack());
-
+                    System.out.println(mob.getName() + " took " + player.getAttack() + " damage!");
                     if(mob.getHealth() <= 0){
                         mob.onDefeat();
                         if(mob instanceof EventKilled){
-                            ((EventKilled) mob).run();
+                            ((EventKilled) mob).onDeath(player);
                         }
                         toRemove.add(mob);
                     }else{
-                        if(mob instanceof Attackable){
-                            ((Attackable) mob).attack(player);
+                        mob.attack(player);
+                        if(mob instanceof Shopkeeper){
+                            ((Shopkeeper) mob).setAttacked(true);
                         }
                     }
                 }

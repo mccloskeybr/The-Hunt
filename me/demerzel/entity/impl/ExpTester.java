@@ -8,6 +8,6 @@ import me.demerzel.location.Location;
  */
 public class ExpTester extends EntityMob {
     public ExpTester(Location location) {
-        super("Tester", "", 1, 0, 0, location, 30, 0);
+        super("Tester", "", 1, 0, 0, location, 30, 100, 0, "The Tester tests your limits!");
     }
 }
