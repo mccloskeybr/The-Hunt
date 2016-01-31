@@ -11,7 +11,7 @@ public class CommandManager {
         commandHashMap = new HashMap<>();
 
         new Attack("attack").setDescription("Attack an entity. Usage: attack <integer>").register(this);
-        new Crap("crap", "poo", "poop", "take a poop").setDescription("Take a poo right where you're standing.").register(this);
+        new Crap("crap", "poo", "poop", "take a poop", "take a crap").setDescription("Take a poo right where you're standing.").register(this);
         new Dance("dance").setDescription("Break out into a killer dance").register(this);
         new Die("die", "suicide", "drop dead").setDescription("Drop dead in the middle of the room.").register(this);
         new Equip("equip", "equip the").setDescription("Equip an item from your inventory. Usage: equip <item>").register(this);

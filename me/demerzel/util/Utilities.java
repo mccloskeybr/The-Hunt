@@ -31,12 +31,7 @@ public class Utilities {
 
         Collections.addAll(parsedArray, input.split("\\s+"));
 
-        String[] parsed = new String[parsedArray.size()];
-        for(int i = 0; i < parsed.length; i++){
-            parsed[i] = parsedArray.get(i);
-        }
-
-        return parsed;
+        return parsedArray.toArray(new String[0]);
     }
 
     @Contract("null -> false")
