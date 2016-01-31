@@ -1,14 +1,11 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
-import me.demerzel.entity.EntityMob;
-import me.demerzel.entity.EntityPlayer;
-import me.demerzel.entity.EntityType;
-import me.demerzel.entity.EventKilled;
-import me.demerzel.entity.impl.Shopkeeper;
+import me.demerzel.entity.*;
 import me.demerzel.item.ItemSlot;
 import me.demerzel.item.ItemType;
 import me.demerzel.util.GameManager;
+import me.demerzel.util.Utilities;
 
 import java.util.ArrayList;
 
@@ -22,63 +19,76 @@ public class Attack extends Command {
 
     @Override
     public boolean execute(String[] args, EntityPlayer player) {
-        GameManager gameManager = GameManager.getInstance();
+        ArrayList<EntityMob> dead = new ArrayList<>();
 
-        if(player.getLocation().getMobs().size() > 0){
-            if(player.getEquipped().get(ItemSlot.WEAPON) == null ||
-                    player.getEquipped().get(ItemSlot.WEAPON).getType() == ItemType.SINGLETARGET){
-                try{
-                    int arg = Integer.parseInt(args[1]);
-                    EntityMob target = player.getLocation().getMob(arg);
-
-                    if(target == null){
-                        System.out.println("Can't find that mob!");
-                        return false;
-                    }
-
-                    target.modHealth(- player.getAttack());
-                    target.setType(EntityType.HOSTILE);
-                    System.out.println(target.getName() + " took " + player.getAttack() + " damage!");
-                    if(target.getHealth() <= 0){
-                        target.onDefeat();
-                        if(target instanceof EventKilled){
-                            ((EventKilled) target).onDeath(player);
-                        }
-                        player.getLocation().removeMob(target);
-                    }else{
-                        target.attack(player);
-                    }
-
-                    System.out.println();
-                    gameManager.showEnemies();
-                }catch(Exception e){
-                    System.out.println("Enter a number.");
-                    return false;
-                }
-            }else if(player.getEquipped().get(ItemSlot.WEAPON).getType() == ItemType.MULTITARGET){
-                ArrayList<EntityMob> toRemove = new ArrayList<>();
-
+        if(player.getLocation().getMobs().size() > 1){
+            if(player.getEquipped().get(ItemSlot.WEAPON).getType() == ItemType.MULTITARGET){
                 for(EntityMob mob : player.getLocation().getMobs()){
-                    mob.modHealth(- player.getAttack());
-                    mob.setType(EntityType.HOSTILE);
-                    System.out.println(mob.getName() + " took " + player.getAttack() + " damage!");
+                    mob.onAttack(player);
                     if(mob.getHealth() <= 0){
                         mob.onDefeat();
                         if(mob instanceof EventKilled){
                             ((EventKilled) mob).onDeath(player);
                         }
-                        toRemove.add(mob);
+                        dead.add(mob);
                     }else{
                         mob.attack(player);
                     }
                 }
 
-                player.getLocation().getMobs().removeAll(toRemove);
-                System.out.println();
-                gameManager.showEnemies();
+                player.getLocation().getMobs().removeAll(dead);
+                GameManager.getInstance().showEntities();
+                return true;
+            }else{
+                if(args.length < 2){
+                    System.out.println("Which mob to attack?");
+                    return false;
+                }
+
+                if(!Utilities.isInteger(args[1])){
+                    System.out.println("You need to provide a number!");
+                    return false;
+                }
+
+                EntityMob mob = player.getLocation().getMob(Integer.parseInt(args[1]));
+
+                if(mob == null){
+                    System.out.println("Entity not found!");
+                    return false;
+                }
+
+                mob.onAttack(player);
+                if(mob.getHealth() <= 0){
+                    mob.onDefeat();
+                    if(mob instanceof EventKilled){
+                        ((EventKilled) mob).onDeath(player);
+                    }
+                    player.getLocation().removeMob(mob);
+                }else{
+                    mob.attack(player);
+                }
             }
-        }else{
-            System.out.println("There aren't any enemies to attack, dude.");
+
+            GameManager.getInstance().showEntities();
+            return true;
+        }else if(player.getLocation().getMobs().size() > 0){
+            EntityMob mob = player.getLocation().getMob(0);
+
+            mob.onAttack(player);
+            if(mob.getHealth() <= 0){
+                mob.onDefeat();
+                if(mob instanceof EventKilled){
+                    ((EventKilled) mob).onDeath(player);
+                }
+                player.getLocation().removeMob(mob);
+            }else{
+                mob.attack(player);
+            }
+
+            GameManager.getInstance().showEntities();
+            return true;
+        }else {
+            System.out.println("There aren't any enemies in the room!");
         }
 
         return false;

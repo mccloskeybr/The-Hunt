@@ -13,8 +13,6 @@ public abstract class EntityMob extends Entity {
     private int expRewarded;
     private int moneyRewarded;
     private int strength;
-    private int uid;
-    private static int count = 1;
     private String attackText;
     private ArrayList<Item> loot;
 
@@ -24,9 +22,7 @@ public abstract class EntityMob extends Entity {
         this.expRewarded = expRewarded;
         this.moneyRewarded = moneyRewarded;
         this.strength = strength;
-        this.uid = count;
         this.attackText = attackText;
-        count++;
     }
 
     public int getExpRewarded() {
@@ -51,14 +47,6 @@ public abstract class EntityMob extends Entity {
 
     public void setStrength(int strength) {
         this.strength = strength;
-    }
-
-    public int getUid() {
-        return uid;
-    }
-
-    public int getCount(){
-        return count;
     }
 
     public String getAttackText() {
@@ -98,6 +86,10 @@ public abstract class EntityMob extends Entity {
         }else{
             System.out.println("But he misses. What a jerk!");
         }
+    }
+
+    public void onAttack(EntityPlayer player){
+        modHealth(-player.getAttack());
     }
 
     public void onDefeat() {

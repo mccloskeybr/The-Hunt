@@ -1,27 +1,25 @@
 package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
+import me.demerzel.entity.EntityPlayer;
 import me.demerzel.entity.EntityType;
-import me.demerzel.entity.Interactable;
+import me.demerzel.entity.EventInteract;
 import me.demerzel.item.Item;
-import me.demerzel.item.impl.Helmet;
-import me.demerzel.item.impl.Revolver;
-import me.demerzel.item.impl.Sledgehammer;
+import me.demerzel.item.impl.*;
 import me.demerzel.location.Location;
 import me.demerzel.util.GameManager;
 
 /**
  * Created by Demerzel on 1/29/16.
  */
-public class Shopkeeper extends EntityMob implements Interactable{
-    private boolean isAttacked;
+public class Shopkeeper extends EntityMob implements EventInteract {
 
     public Shopkeeper(Location location) {
         super("The Shopkeeper", "A man born to sell goods. When you buy his stuff, you give him purpose in life.", 5, 0, 1, location, 100000, 2000, 1, "The Shopkeeper punches you in the nose!", EntityType.NEUTRAL);
-
         addLoot(new Revolver());
-        addLoot(new Sledgehammer());
-        addLoot(new Helmet());
+        addLoot(new BodyArmor());
+        addLoot(new BasicBow());
+
     }
 
     @Override
@@ -46,11 +44,29 @@ public class Shopkeeper extends EntityMob implements Interactable{
         }
     }
 
-    public boolean isAttacked() {
-        return isAttacked;
-    }
+    public boolean buy(EntityPlayer player, String item){
+        if(getType() != EntityType.HOSTILE){
+            for(Item i : getLoot()){
+                if(item.equalsIgnoreCase(i.getName())){
+                    if(player.getMoney() >= i.getPrice()){
+                        player.addItem(i);
+                        player.modMoney(-i.getPrice());
+                        removeLoot(i);
+                        say("Thanks for the purchase!");
+                        interact();
+                        return true;
+                    }
 
-    public void setAttacked(boolean attacked) {
-        isAttacked = attacked;
+                    say("You don't have enough money!");
+                    return true;
+                }
+            }
+
+            say("I don't have that item in stock...");
+            return false;
+        }else{
+            say("Get out of my shop!");
+            return false;
+        }
     }
 }

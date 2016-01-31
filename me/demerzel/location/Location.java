@@ -129,14 +129,12 @@ public abstract class Location {
         return mobs;
     }
 
-    public EntityMob getMob(int uid){
-        for(EntityMob mob:mobs){
-            if(mob.getUid() == uid){
-                return mob;
-            }
+    public EntityMob getMob(int i){
+        try{
+            return getMobs().get(i);
+        }catch(IndexOutOfBoundsException e){
+            return null;
         }
-
-        return null;
     }
 
     public void addMob(EntityMob mob){

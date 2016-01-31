@@ -52,6 +52,7 @@ public class Dragon extends EntityMob implements EventKilled{
             System.out.println("===========================");
             System.out.println("    THANKS FOR PLAYING!    ");
             System.out.println("===========================");
+            System.exit(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import me.demerzel.command.Command;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
+import me.demerzel.item.impl.Fists;
 import me.demerzel.util.GameManager;
 
 import java.util.HashMap;
@@ -28,6 +29,9 @@ public class Inventory extends Command {
             System.out.println("Your current inventory:");
             for(Item item : player.getInventory()){
                 String output = item.getName();
+                if(item instanceof Fists)
+                    continue;
+
                 if(item.getSlot() == ItemSlot.BACKUP || item.getSlot() == ItemSlot.WEAPON){
                     output += " [" + item.getDamage() + "]";
                 }else if(item.getSlot() != ItemSlot.DEFAULT){
@@ -44,6 +48,9 @@ public class Inventory extends Command {
             System.out.println("\nEquipped items:");
             for(HashMap.Entry<ItemSlot, Item> entry: player.getEquipped().entrySet()){
                 Item item = entry.getValue();
+                if(item instanceof Fists)
+                    continue;
+
                 String output = item.getName();
                 if(item.getSlot() == ItemSlot.BACKUP || item.getSlot() == ItemSlot.WEAPON){
                     output += " [" + item.getDamage() + "]";

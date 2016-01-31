@@ -3,16 +3,12 @@ package me.demerzel.item.impl;
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
 import me.demerzel.item.ItemType;
-import me.demerzel.item.Usable;
 
-
-public class Revolver extends Item implements Usable{
+/**
+ * Created by Demerzel on 1/29/16.
+ */
+public class Revolver extends Item{
     public Revolver(){
-        super(2, 0, 5, 100, "Revolver", "A heavy revolver.", "BANG BANG BANG!", true, ItemSlot.WEAPON, ItemType.SINGLETARGET);
-    }
-
-    @Override
-    public void use() {
-        System.out.println("You fire the revolver into the air, but nothing happens. Calm down, just because you're in America doesn't mean you can shoot everything.");
+        super(2, 0, 10, 100, "Revolver", "A medium-sized hand gun. Packs quite a wallop!", "", true, ItemSlot.WEAPON, ItemType.SINGLETARGET);
     }
 }

@@ -43,7 +43,7 @@ public class Dance extends Command {
             }
 
             location.getMobs().removeAll(toRemove);
-            GameManager.getInstance().showEnemies();
+            GameManager.getInstance().showEntities();
         }
         return false;
     }
