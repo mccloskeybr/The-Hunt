@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class GameManager {
     private static GameManager gameManager;
 
-    private static CommandManager factory = new CommandManager();
-    private static EntityPlayer player;
+    private CommandManager factory = new CommandManager();
+    private EntityPlayer player;
 
     private GameManager(){
 
@@ -86,7 +86,7 @@ public class GameManager {
 
     public boolean action(){
         String command = Utilities.cmd("");
-        String[] args = command.split("\\s+");
+        String[] args = Utilities.parseInput(command);
         Command cmd = factory.getCommand(args[0]);
         if(cmd != null){
             cmd.execute(args, player);
@@ -99,5 +99,9 @@ public class GameManager {
 
     public EntityPlayer getPlayer(){
         return player;
+    }
+
+    public CommandManager getFactory(){
+        return factory;
     }
 }

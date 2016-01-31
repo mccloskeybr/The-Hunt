@@ -1,6 +1,11 @@
 package me.demerzel.util;
 
-import java.util.Scanner;
+import me.demerzel.command.Command;
+import me.demerzel.command.CommandManager;
+import org.jetbrains.annotations.Contract;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Demerzel on 1/28/16.
@@ -12,6 +17,29 @@ public class Utilities {
         return input.nextLine();
     }
 
+    public static String[] parseInput(String input){
+        input += " ";
+        HashMap<String, Command> commands = GameManager.getInstance().getFactory().getCommandHashMap();
+        ArrayList<String> parsedArray = new ArrayList<>();
+        for(String key : commands.keySet()){
+            if(input.startsWith(key)){
+                parsedArray.add(key);
+                input = input.substring(key.length() + 1);
+                break;
+            }
+        }
+
+        Collections.addAll(parsedArray, input.split("\\s+"));
+
+        String[] parsed = new String[parsedArray.size()];
+        for(int i = 0; i < parsed.length; i++){
+            parsed[i] = parsedArray.get(i);
+        }
+
+        return parsed;
+    }
+
+    @Contract("null -> false")
     public static boolean isInteger(String str) {
         if (str == null) {
             return false;

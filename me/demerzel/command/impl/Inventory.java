@@ -33,12 +33,12 @@ public class Inventory extends Command {
                     continue;
 
                 if(item.getSlot() == ItemSlot.BACKUP || item.getSlot() == ItemSlot.WEAPON){
-                    output += " [" + item.getDamage() + "]";
+                    output += " [Damage: " + item.getDamage() + "]";
                 }else if(item.getSlot() != ItemSlot.DEFAULT){
-                    output += " (" + item.getArmor() + ")";
+                    output += " [Armor: " + item.getArmor() + "]";
                 }
 
-                System.out.println("<" + item.getSlot().getName() + "> " + output );
+                System.out.println("<" + item.getSlot().getName() + "> " + output + " | " + item.getDescription());
             }
         }else{
             System.out.println("Your inventory is empty.");
@@ -48,17 +48,15 @@ public class Inventory extends Command {
             System.out.println("\nEquipped items:");
             for(HashMap.Entry<ItemSlot, Item> entry: player.getEquipped().entrySet()){
                 Item item = entry.getValue();
-                if(item instanceof Fists)
-                    continue;
 
                 String output = item.getName();
                 if(item.getSlot() == ItemSlot.BACKUP || item.getSlot() == ItemSlot.WEAPON){
-                    output += " [" + item.getDamage() + "]";
+                    output += " [Damage: " + item.getDamage() + "]";
                 }else if(item.getSlot() != ItemSlot.DEFAULT){
-                    output += " (" + item.getArmor() + ")";
+                    output += " [Armor: " + item.getArmor() + "]";
                 }
 
-                System.out.println("<" + item.getSlot().getName() + "> " + output);
+                System.out.println("<" + item.getSlot().getName() + "> " + output + " | " + item.getDescription());
             }
         }
         return false;
