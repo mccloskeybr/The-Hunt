@@ -20,10 +20,12 @@ public class CommandManager {
         new Inventory("items", "inventory", "list items", "show inventory", "show items").setDescription("Look at your inventory along with your current stats.").register(this);
         new Pickup("pickup", "pick up", "pick up the").setDescription("Pick up an item off the ground. Usage: pickup <item>").register(this);
         new Sell("sell", "sell the").setDescription("Not currently in use.").register(this);
-        new Use("use", "use the").setDescription("Use an item from your inventory. Usage: use <item>").register(this);
         new Wallet("wallet", "money", "open wallet").setDescription("View your wallet.").register(this);
         new Buy("buy", "purchase").setDescription("Buy an item").register(this);
         new Interact("interact", "talk", "talk to").setDescription("Interact with an entity").register(this);
+        new Cast("cast").setDescription("Cast a spell at an enemy. Usage: cast <spell> <integer>").register(this);
+        new Use("use").setDescription("Use an item from your inventory").register(this);
+        new Spellbook("spells", "spellbook").setDescription("View your currently known spells.").register(this);
     }
 
     public Command getCommand(String cmd){

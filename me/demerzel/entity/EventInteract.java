@@ -5,4 +5,6 @@ package me.demerzel.entity;
  */
 public interface EventInteract {
     void interact();
+
+
 }

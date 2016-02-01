@@ -16,8 +16,8 @@ public abstract class EntityMob extends Entity {
     private String attackText;
     private ArrayList<Item> loot;
 
-    public EntityMob(String name, String bio, int health, int mana, int speed, Location location, int expRewarded, int moneyRewarded, int strength, String attackText, EntityType type) {
-        super(name, bio, health, mana, speed, location, type);
+    public EntityMob(String name, String bio, int maxHealth, int maxMana, int speed, Location location, int expRewarded, int moneyRewarded, int strength, String attackText, EntityBehavior type) {
+        super(name, bio, maxHealth, maxMana, speed, location, type);
         this.loot = new ArrayList<>();
         this.expRewarded = expRewarded;
         this.moneyRewarded = moneyRewarded;

@@ -25,7 +25,7 @@ public class Attack extends Command {
             if(player.getEquipped().get(ItemSlot.WEAPON).getType() == ItemType.MULTITARGET){
                 for(EntityMob mob : player.getLocation().getMobs()){
                     mob.onAttack(player);
-                    mob.setType(EntityType.HOSTILE);
+                    mob.setType(EntityBehavior.HOSTILE);
                     if(mob.getHealth() <= 0){
                         mob.onDefeat();
                         if(mob instanceof EventKilled){
@@ -59,7 +59,7 @@ public class Attack extends Command {
                 }
 
                 mob.onAttack(player);
-                mob.setType(EntityType.HOSTILE);
+                mob.setType(EntityBehavior.HOSTILE);
                 if(mob.getHealth() <= 0){
                     mob.onDefeat();
                     if(mob instanceof EventKilled){
@@ -77,7 +77,7 @@ public class Attack extends Command {
             EntityMob mob = player.getLocation().getMob(0);
 
             mob.onAttack(player);
-            mob.setType(EntityType.HOSTILE);
+            mob.setType(EntityBehavior.HOSTILE);
             if(mob.getHealth() <= 0){
                 mob.onDefeat();
                 if(mob instanceof EventKilled){

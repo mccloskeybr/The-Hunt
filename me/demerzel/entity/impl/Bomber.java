@@ -2,26 +2,23 @@ package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
-import me.demerzel.entity.EntityType;
+import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EventKilled;
 import me.demerzel.location.Location;
-import me.demerzel.util.GameManager;
-
-import java.util.Random;
 
 /**
  * Created by Demerzel on 1/28/16.
  */
 public class Bomber extends EntityMob implements EventKilled {
     public Bomber(Location location) {
-        super("Bomber", "An enemy with suicidal tendencies. If they spot you, they'll rush at you.", 5, 0, 6, location, 3, 2, 50, "The Bomber rushes at you! He explodes!", EntityType.HOSTILE);
+        super("Bomber", "An enemy with suicidal tendencies. If they spot you, they'll rush at you.", 5, 0, 6, location, 15, 2, 50, "The Bomber rushes at you! He explodes!", EntityBehavior.HOSTILE);
     }
 
     @Override
     public void onDeath(EntityPlayer player){
         double d = Math.random();
         if(d >= 0.6){
-            int damage = Math.max(0, 5 - player.getArmor());
+            int damage = Math.max(0, 5);
             player.modHealth(-damage);
             System.out.println("The bomber exploded! You lost " + damage + " health! Remaining HP: [" + player.getHealth() + "]");
         }

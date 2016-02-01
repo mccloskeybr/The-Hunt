@@ -2,7 +2,7 @@ package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
-import me.demerzel.entity.EntityType;
+import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EventInteract;
 import me.demerzel.item.Item;
 import me.demerzel.item.impl.*;
@@ -15,7 +15,7 @@ import me.demerzel.util.GameManager;
 public class Shopkeeper extends EntityMob implements EventInteract {
 
     public Shopkeeper(Location location) {
-        super("The Shopkeeper", "A man born to sell goods. When you buy his stuff, you give him purpose in life.", 5, 0, 1, location, 100000, 2000, 1, "The Shopkeeper punches you in the nose!", EntityType.NEUTRAL);
+        super("The Shopkeeper", "A man born to sell goods. When you buy his stuff, you give him purpose in life.", 5, 0, 1, location, 100000, 2000, 1, "The Shopkeeper punches you in the nose!", EntityBehavior.NEUTRAL);
         addLoot(new Revolver());
         addLoot(new BodyArmor());
         addLoot(new BasicBow());
@@ -32,7 +32,7 @@ public class Shopkeeper extends EntityMob implements EventInteract {
 
     @Override
     public void interact() {
-        if(getType() == EntityType.NEUTRAL){
+        if(getType() == EntityBehavior.NEUTRAL){
             say("Hello! Welcome to Generic Shop!");
             say("What would you like to buy?");
             for (Item item : getLoot()){
@@ -45,7 +45,7 @@ public class Shopkeeper extends EntityMob implements EventInteract {
     }
 
     public boolean buy(EntityPlayer player, String item){
-        if(getType() != EntityType.HOSTILE){
+        if(getType() != EntityBehavior.HOSTILE){
             for(Item i : getLoot()){
                 if(item.equalsIgnoreCase(i.getName())){
                     if(player.getMoney() >= i.getPrice()){

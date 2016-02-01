@@ -4,7 +4,7 @@ package me.demerzel.item;
 public abstract class Item {
     private int id;
     private int armor;
-    private int damage;
+    private int magnitude;
     private int price;
     private String name;
     private String description;
@@ -13,21 +13,17 @@ public abstract class Item {
     private ItemSlot slot;
     private ItemType type;
 
-    public Item(int id, int armor, int damage, int price, String name, String description, String useText, boolean permanent, ItemSlot slot, ItemType type){
+    public Item(int id, int armor, int magnitude, int price, String name, String description, String useText, boolean permanent, ItemSlot slot, ItemType type){
         this.id = id;
         this.name = name;
         this.armor = armor;
-        this.damage = damage;
+        this.magnitude = magnitude;
         this.price = price;
         this.description = description;
         this.useText = useText;
         this.permanent = permanent;
         this.slot = slot;
         this.type = type;
-    }
-
-    public Item(){
-        this(0, 0, 0, 0, "Null item", "Null desc", "Nothing", true, ItemSlot.DEFAULT, ItemType.DEFAULT);
     }
 
     public String toString(){
@@ -90,12 +86,12 @@ public abstract class Item {
         this.armor = armor;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getMagnitude() {
+        return magnitude;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setMagnitude(int magnitude) {
+        this.magnitude = magnitude;
     }
 
     public ItemType getType() {

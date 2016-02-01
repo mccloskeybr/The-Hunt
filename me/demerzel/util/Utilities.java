@@ -14,7 +14,7 @@ public class Utilities {
     public static String cmd(String output){
         System.out.println(output);
         Scanner input = new Scanner(System.in);
-        return input.nextLine();
+        return input.nextLine().toLowerCase();
     }
 
     public static String[] parseInput(String input){

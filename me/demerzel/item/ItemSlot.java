@@ -4,7 +4,7 @@ package me.demerzel.item;
  * Created by yeagerja on 1/27/16.
  */
 public enum ItemSlot {
-    HEAD("Head"), CHEST("Chest"), PANTS("Pants"), BOOTS("Boots"), WEAPON("Weapon"), BACKUP("Backup"), DEFAULT("Defaut");
+    HEAD("Head"), CHEST("Chest"), PANTS("Pants"), BOOTS("Boots"), WEAPON("Weapon"), BACKUP("Backup"), MISC("Misc"), DEFAULT("Default");
 
     private final String name;
     ItemSlot(String name){

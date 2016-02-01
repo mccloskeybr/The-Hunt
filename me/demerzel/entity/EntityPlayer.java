@@ -2,7 +2,11 @@ package me.demerzel.entity;
 
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
+import me.demerzel.item.impl.HealthPot;
 import me.demerzel.location.Location;
+import me.demerzel.spell.impl.Fireball;
+import me.demerzel.spell.impl.Firestorm;
+import me.demerzel.spell.impl.Heal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,11 +22,16 @@ public class EntityPlayer extends Entity {
     private HashMap<ItemSlot, Item> equipped;
 
     public EntityPlayer(String name, String bio, Location location) {
-        super(name, bio, 30, 10, 4, location, EntityType.PLAYER);
+        super(name, bio, 30, 50, 4, location, EntityBehavior.PLAYER);
         inventory = new ArrayList<>();
         equipped = new HashMap<>();
         wallet = 100;
         pooped = false;
+
+        addSpell(new Fireball());
+        addSpell(new Heal());
+        addSpell(new Firestorm());
+        addItem(new HealthPot());
     }
 
     @Override
@@ -72,7 +81,7 @@ public class EntityPlayer extends Entity {
     public int getAttack(){
         int attack = 1;
         for(HashMap.Entry<ItemSlot, Item> entry: getEquipped().entrySet()){
-            attack += entry.getValue().getDamage();
+            attack += entry.getValue().getMagnitude();
         }
 
         return (int) (attack + (Math.log10(getLevel()) * 10));

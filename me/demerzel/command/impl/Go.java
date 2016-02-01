@@ -1,11 +1,10 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
-import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.location.Exit;
 import me.demerzel.location.Location;
-import me.demerzel.location.Runnable;
+import me.demerzel.location.EventEnter;
 import me.demerzel.util.GameManager;
 
 
@@ -28,8 +27,8 @@ public class Go extends Command{
                 if(exit.getActive()){
                     player.setLocation(exit.getLeadsTo());
 
-                    if(player.getLocation() instanceof Runnable){
-                        ((Runnable) player.getLocation()).run(player);
+                    if(player.getLocation() instanceof EventEnter){
+                        ((EventEnter) player.getLocation()).onEnter(player);
                     }
 
                     GameManager.getInstance().showLocation();

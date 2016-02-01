@@ -77,6 +77,7 @@ public class Exit {
         this.active = active;
     }
 
+    @Override
     public String toString() {
         return m_directionName;
     }

@@ -4,8 +4,8 @@ import me.demerzel.command.Command;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
+import me.demerzel.item.ItemType;
 import me.demerzel.item.impl.Fists;
-import me.demerzel.util.GameManager;
 
 import java.util.HashMap;
 
@@ -32,9 +32,11 @@ public class Inventory extends Command {
                 if(item instanceof Fists)
                     continue;
 
-                if(item.getSlot() == ItemSlot.BACKUP || item.getSlot() == ItemSlot.WEAPON){
-                    output += " [Damage: " + item.getDamage() + "]";
-                }else if(item.getSlot() != ItemSlot.DEFAULT){
+                if(item.getType() == ItemType.SINGLETARGET || item.getType() == ItemType.MULTITARGET) {
+                    output += " [Damage: " + item.getMagnitude() + "]";
+                }else if(item.getType() == ItemType.FIREONCE){
+                    output += " [Potency: " + item.getMagnitude() + "]";
+                }else if(item.getType() == ItemType.ARMOR){
                     output += " [Armor: " + item.getArmor() + "]";
                 }
 
@@ -50,9 +52,11 @@ public class Inventory extends Command {
                 Item item = entry.getValue();
 
                 String output = item.getName();
-                if(item.getSlot() == ItemSlot.BACKUP || item.getSlot() == ItemSlot.WEAPON){
-                    output += " [Damage: " + item.getDamage() + "]";
-                }else if(item.getSlot() != ItemSlot.DEFAULT){
+                if(item.getType() == ItemType.SINGLETARGET || item.getType() == ItemType.MULTITARGET) {
+                    output += " [Damage: " + item.getMagnitude() + "]";
+                }else if(item.getType() == ItemType.FIREONCE){
+                    output += " [Potency: " + item.getMagnitude() + "]";
+                }else if(item.getType() == ItemType.ARMOR){
                     output += " [Armor: " + item.getArmor() + "]";
                 }
 
