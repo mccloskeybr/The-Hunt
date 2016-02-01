@@ -23,7 +23,7 @@ public class EntityPlayer extends Entity {
     private HashMap<ItemSlot, Item> equipped;
 
     public EntityPlayer(String name, String bio, Location location) {
-        super(name, bio, 30, 50, 4, location, EntityBehavior.PLAYER);
+        super(name, bio, 60, 50, 4, location, EntityBehavior.PLAYER);
         inventory = new ArrayList<>();
         equipped = new HashMap<>();
         wallet = 100;
@@ -37,7 +37,7 @@ public class EntityPlayer extends Entity {
 
     @Override
     public void modHealth(int amt){
-        if(!isGod){
+        if(!isGod()){
             super.modHealth(amt);
         }
     }
@@ -66,11 +66,9 @@ public class EntityPlayer extends Entity {
         if(getLevel(getExperience() + amt) > getLevel()){
             System.out.println("=========================");
             System.out.println("  Level Up! New Level: " + (getLevel(getExperience() + amt)));
+            System.out.println(" Strength increased by: " + (getAttack(getLevel() + 1) - getAttack()));
             System.out.println("=========================");
         }
-
-        setMaxHealth((int) (getMaxHealth() + (Math.log10(getLevel()) * 20)));
-        setHealth(getMaxHealth());
         this.experience += amt;
     }
 
@@ -84,12 +82,21 @@ public class EntityPlayer extends Entity {
     }
 
     public int getAttack(){
-        int attack = 9;
+        int attack = 2;
         for(HashMap.Entry<ItemSlot, Item> entry: getEquipped().entrySet()){
             attack += entry.getValue().getMagnitude();
         }
 
         return (int) (attack + (Math.log10(getLevel()) * 10));
+    }
+
+    public int getAttack(int level){
+        int attack = 2;
+        for(HashMap.Entry<ItemSlot, Item> entry: getEquipped().entrySet()){
+            attack += entry.getValue().getMagnitude();
+        }
+
+        return (int) (attack + (Math.log10(level) * 10));
     }
 
     public boolean isPooped() {
