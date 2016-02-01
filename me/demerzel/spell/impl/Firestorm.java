@@ -16,7 +16,7 @@ public class Firestorm extends Spell {
 
     @Override
     public void onCast(Entity entity) {
-        System.out.println("The enemy is consumed by fire! They took " + getMagnitude() + " damage!");
+        System.out.println("The enemy is consumed by fire! It took " + getMagnitude() + " damage!");
         entity.modHealth(-getMagnitude());
     }
 }

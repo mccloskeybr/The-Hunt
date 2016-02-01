@@ -13,6 +13,7 @@ public class Start {
     public static void main(String[] args) {
         GameManager gameManager = GameManager.getInstance();
 
+
         System.out.println("Welcome to The Hunt");
         String command = Utilities.cmd("Enter <Start> to begin!");
         if (command.equalsIgnoreCase("start")) {

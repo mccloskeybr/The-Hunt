@@ -89,12 +89,15 @@ public abstract class EntityMob extends Entity {
     }
 
     public void onAttack(EntityPlayer player){
-        modHealth(-player.getAttack());
+        int damage = Math.min(getHealth(), player.getAttack());
+
+        if(damage < 0){
+            damage = 0;
+        }
+        modHealth(-damage);
     }
 
     public void onDefeat() {
-        System.out.println("You have defeated the " + getName());
-
         for(Item item:this.getLoot()){
             GameManager.getInstance().getPlayer().addItem(item);
             System.out.println("Looted " + item.getName() + " from " + getName());

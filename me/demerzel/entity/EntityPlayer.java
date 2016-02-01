@@ -18,6 +18,7 @@ public class EntityPlayer extends Entity {
     private int wallet;
     private int experience;
     private boolean pooped;
+    private boolean isGod;
     private ArrayList<Item> inventory;
     private HashMap<ItemSlot, Item> equipped;
 
@@ -35,8 +36,10 @@ public class EntityPlayer extends Entity {
     }
 
     @Override
-    public int getHealth(){
-        return (int) (super.getHealth() + (Math.log10(getLevel()) * 20));
+    public void modHealth(int amt){
+        if(!isGod){
+            super.modHealth(amt);
+        }
     }
 
     public int getMoney() {
@@ -66,6 +69,8 @@ public class EntityPlayer extends Entity {
             System.out.println("=========================");
         }
 
+        setMaxHealth((int) (getMaxHealth() + (Math.log10(getLevel()) * 20)));
+        setHealth(getMaxHealth());
         this.experience += amt;
     }
 
@@ -79,7 +84,7 @@ public class EntityPlayer extends Entity {
     }
 
     public int getAttack(){
-        int attack = 1;
+        int attack = 9;
         for(HashMap.Entry<ItemSlot, Item> entry: getEquipped().entrySet()){
             attack += entry.getValue().getMagnitude();
         }
@@ -137,5 +142,13 @@ public class EntityPlayer extends Entity {
 
     public int getLevel(int experience){
         return (int) (Math.sqrt(100 * (2 * experience + 25)) + 50) / 100;
+    }
+
+    public boolean isGod() {
+        return isGod;
+    }
+
+    public void setGod(boolean god) {
+        isGod = god;
     }
 }

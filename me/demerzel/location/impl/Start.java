@@ -2,7 +2,6 @@ package me.demerzel.location.impl;
 
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.entity.impl.Dragon;
-import me.demerzel.entity.impl.ExpTester;
 import me.demerzel.entity.impl.Guard;
 import me.demerzel.location.Location;
 

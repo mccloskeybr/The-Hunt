@@ -2,6 +2,7 @@ package me.demerzel.util;
 
 import me.demerzel.command.Command;
 import me.demerzel.command.CommandManager;
+import me.demerzel.command.impl.*;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
@@ -14,11 +15,27 @@ import java.util.ArrayList;
 
 public class GameManager {
     private static GameManager gameManager;
-
     private CommandManager factory = new CommandManager();
+    private ArrayList<Class<? extends Command>> allowedCommands;
     private EntityPlayer player;
 
     private GameManager(){
+        allowedCommands = new ArrayList<>();
+        allowedCommands.add(Battle.class);
+        allowedCommands.add(Buy.class);
+        allowedCommands.add(Crap.class);
+        allowedCommands.add(Dance.class);
+        allowedCommands.add(Die.class);
+        allowedCommands.add(Equip.class);
+        allowedCommands.add(Examine.class);
+        allowedCommands.add(Go.class);
+        allowedCommands.add(Interact.class);
+        allowedCommands.add(Inventory.class);
+        allowedCommands.add(Pickup.class);
+        allowedCommands.add(Spellbook.class);
+        allowedCommands.add(Use.class);
+        allowedCommands.add(Wallet.class);
+        allowedCommands.add(Cheat.class);
 
     }
 
@@ -89,11 +106,14 @@ public class GameManager {
         String[] args = Utilities.parseInput(command);
         Command cmd = factory.getCommand(args[0]);
         if(cmd != null){
-            cmd.execute(args, player);
-            return true;
+            if(isAllowed(command)){
+                cmd.execute(args, player);
+            }else{
+                System.out.println("You can't use that command outside of battle!");
+            }
+        }else{
+            System.out.println("You're spouting gibberish.");
         }
-
-        System.out.println("You're spouting jibberish.");
         return true;
     }
 
@@ -103,5 +123,15 @@ public class GameManager {
 
     public CommandManager getFactory(){
         return factory;
+    }
+
+    private boolean isAllowed(String cmd){
+        for(Class<? extends Command> command : allowedCommands){
+            if(factory.getAliases(command).contains(Utilities.parseInput(cmd)[0])){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

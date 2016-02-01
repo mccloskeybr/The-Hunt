@@ -1,6 +1,8 @@
 package me.demerzel.item;
 
 
+import me.demerzel.spell.SpellManager;
+
 public abstract class Item {
     private int id;
     private int armor;
@@ -108,5 +110,9 @@ public abstract class Item {
 
     public void setType(ItemType type) {
         this.type = type;
+    }
+
+    public void register(ItemManager itemManager){
+        itemManager.add(name.toLowerCase(), this);
     }
 }
