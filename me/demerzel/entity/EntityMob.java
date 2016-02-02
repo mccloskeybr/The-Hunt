@@ -98,10 +98,11 @@ public abstract class EntityMob extends Entity {
     }
 
     public void onDefeat() {
-        for(Item item:this.getLoot()){
+        double d = Math.random();
+        this.getLoot().stream().filter(item -> d >= 0.5).forEach(item -> {
             GameManager.getInstance().getPlayer().addItem(item);
             System.out.println("Looted " + item.getName() + " from " + getName());
-        }
+        });
 
         System.out.println("Gained " + getExpRewarded() + " EXP!");
         System.out.println("Found " + getMoneyRewarded() + " coins!");

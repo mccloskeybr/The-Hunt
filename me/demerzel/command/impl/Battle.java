@@ -45,8 +45,7 @@ public class Battle extends Command {
             Location battleground = new Battleground();
             player.setLocation(battleground);
             battleground.addMob(mob);
-            new BattleManager(location, mob);
-
+            GameManager.getInstance().getBattleManager().beginBattle(location, mob);
             GameManager.getInstance().showEntities();
             return true;
         }else if(player.getLocation().getMobs().size() > 0){
@@ -55,7 +54,7 @@ public class Battle extends Command {
             Location battleground = new Battleground();
             player.setLocation(battleground);
             battleground.addMob(mob);
-            new BattleManager(location, mob);
+            GameManager.getInstance().getBattleManager().beginBattle(location, mob);
             return true;
         }else {
             System.out.println("There aren't any enemies in the room!");

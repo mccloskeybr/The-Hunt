@@ -2,7 +2,7 @@ package me.demerzel.entity.impl;
 
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityBehavior;
-import me.demerzel.item.impl.Revolver;
+import me.demerzel.item.impl.weapon.Revolver;
 import me.demerzel.location.Location;
 
 /**

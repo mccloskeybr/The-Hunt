@@ -2,11 +2,9 @@ package me.demerzel.entity;
 
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
-import me.demerzel.item.impl.HealthPot;
+import me.demerzel.item.impl.misc.HealthPot;
 import me.demerzel.location.Location;
-import me.demerzel.spell.impl.Fireball;
-import me.demerzel.spell.impl.Firestorm;
-import me.demerzel.spell.impl.Heal;
+import me.demerzel.spell.impl.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,10 +13,14 @@ import java.util.HashMap;
  * Created by Demerzel on 1/28/16.
  */
 public class EntityPlayer extends Entity {
+    private final double LEVEL_CONSTANT = 0.115;
+
+    private int level;
+    private int baseAttack;
+    private int baseSpeed;
     private int wallet;
     private int experience;
     private boolean pooped;
-    private boolean isGod;
     private ArrayList<Item> inventory;
     private HashMap<ItemSlot, Item> equipped;
 
@@ -28,18 +30,10 @@ public class EntityPlayer extends Entity {
         equipped = new HashMap<>();
         wallet = 100;
         pooped = false;
+        level = 1;
 
-        addSpell(new Fireball());
-        addSpell(new Heal());
-        addSpell(new Firestorm());
-        addItem(new HealthPot());
-    }
-
-    @Override
-    public void modHealth(int amt){
-        if(!isGod()){
-            super.modHealth(amt);
-        }
+        this.baseAttack = 4;
+        this.baseSpeed = 4;
     }
 
     public int getMoney() {
@@ -63,13 +57,29 @@ public class EntityPlayer extends Entity {
     }
 
     public void modExperience(int amt){
-        if(getLevel(getExperience() + amt) > getLevel()){
-            System.out.println("=========================");
-            System.out.println("  Level Up! New Level: " + (getLevel(getExperience() + amt)));
-            System.out.println(" Strength increased by: " + (getAttack(getLevel() + 1) - getAttack()));
-            System.out.println("=========================");
-        }
         this.experience += amt;
+
+        while(nextLevel() <= 0){
+            int addedHp = (int) Math.max(1, 2 * getLevel(getExperience() + amt));
+            int addedStr = (int) Math.max(1, 1.1 * getLevel(getExperience() + amt));
+            int addedSpd = (int) Math.max(1, 1.3 * getLevel(getExperience() + amt));
+
+            level++;
+
+            System.out.println("=========================");
+            System.out.println("  Level Up! New Level: " + getLevel());
+            System.out.println("   Health increased by: " + addedHp);
+            System.out.println(" Strength increased by: " + (addedStr));
+            System.out.println("   Speed increased by: " + (addedSpd));
+            System.out.println("=========================");
+
+            modMaxHealth(addedHp);
+            baseAttack += addedStr;
+            baseSpeed += addedSpd;
+            heal();
+
+
+        }
     }
 
     public int getArmor(){
@@ -82,21 +92,21 @@ public class EntityPlayer extends Entity {
     }
 
     public int getAttack(){
-        int attack = 2;
+        int attack = 0;
         for(HashMap.Entry<ItemSlot, Item> entry: getEquipped().entrySet()){
             attack += entry.getValue().getMagnitude();
         }
 
-        return (int) (attack + (Math.log10(getLevel()) * 10));
+        return (attack + baseAttack);
     }
 
-    public int getAttack(int level){
-        int attack = 2;
-        for(HashMap.Entry<ItemSlot, Item> entry: getEquipped().entrySet()){
-            attack += entry.getValue().getMagnitude();
-        }
+    @Override
+    public int getSpeed(){
+        return (baseSpeed);
+    }
 
-        return (int) (attack + (Math.log10(level) * 10));
+    public int getSpeed(int level){
+        return (int) (4 + (Math.log10(level) * 10));
     }
 
     public boolean isPooped() {
@@ -144,18 +154,14 @@ public class EntityPlayer extends Entity {
     }
 
     public int getLevel(){
-        return (int) (Math.sqrt(100 * (2 * getExperience() + 25)) + 50) / 100;
+        return level;
     }
 
     public int getLevel(int experience){
         return (int) (Math.sqrt(100 * (2 * experience + 25)) + 50) / 100;
     }
 
-    public boolean isGod() {
-        return isGod;
-    }
-
-    public void setGod(boolean god) {
-        isGod = god;
+    public int nextLevel(){
+        return (int) (Math.pow(getLevel() / LEVEL_CONSTANT, 2) - getExperience());
     }
 }

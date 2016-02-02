@@ -1,4 +1,4 @@
-package me.demerzel.item.impl;
+package me.demerzel.item.impl.misc;
 
 import me.demerzel.entity.Entity;
 import me.demerzel.item.Item;
@@ -11,7 +11,7 @@ import me.demerzel.item.Usable;
  */
 public class HealthPot extends Item implements Usable {
     public HealthPot() {
-        super(4, 0, 20, 20, "Potion", "Heals 20 HP", "You used the Health Potion!", false, ItemSlot.MISC, ItemType.FIREONCE);
+        super(0, 20, 20, "Potion", "Heals 20 HP", "You used the Health Potion!", false, ItemSlot.MISC, ItemType.FIREONCE);
     }
 
     @Override
@@ -23,7 +23,6 @@ public class HealthPot extends Item implements Usable {
         }else{
             healed = getMagnitude();
         }
-
 
         entity.modHealth(healed);
         System.out.println("You drank the potion. You gained " + healed + " HP!");

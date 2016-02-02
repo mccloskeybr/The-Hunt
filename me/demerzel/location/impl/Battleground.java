@@ -8,5 +8,6 @@ import me.demerzel.location.Location;
 public class Battleground extends Location {
     public Battleground() {
         super("Battleground", "The battleground");
+        addState(1, "The Battleground");
     }
 }

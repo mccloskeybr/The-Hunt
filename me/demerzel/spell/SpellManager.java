@@ -1,8 +1,6 @@
 package me.demerzel.spell;
 
-import me.demerzel.spell.impl.Fireball;
-import me.demerzel.spell.impl.Firestorm;
-import me.demerzel.spell.impl.Heal;
+import me.demerzel.spell.impl.*;
 
 import java.util.HashMap;
 
@@ -18,6 +16,9 @@ public class SpellManager {
         new Fireball().register(this);
         new Heal().register(this);
         new Firestorm().register(this);
+        new Regeneration().register(this);
+        new Inferno().register(this);
+        new Thunderbolt().register(this);
     }
 
     public Spell getSpell(String spell){

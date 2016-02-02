@@ -31,6 +31,8 @@ public class Use extends Command{
                 if(!item.isPermanent()){
                     used.add(item);
                 }
+
+                break;
             }
         }
 

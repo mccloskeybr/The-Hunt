@@ -4,7 +4,6 @@ package me.demerzel.item;
 import me.demerzel.spell.SpellManager;
 
 public abstract class Item {
-    private int id;
     private int armor;
     private int magnitude;
     private int price;
@@ -15,8 +14,7 @@ public abstract class Item {
     private ItemSlot slot;
     private ItemType type;
 
-    public Item(int id, int armor, int magnitude, int price, String name, String description, String useText, boolean permanent, ItemSlot slot, ItemType type){
-        this.id = id;
+    public Item(int armor, int magnitude, int price, String name, String description, String useText, boolean permanent, ItemSlot slot, ItemType type){
         this.name = name;
         this.armor = armor;
         this.magnitude = magnitude;
@@ -30,14 +28,6 @@ public abstract class Item {
 
     public String toString(){
         return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

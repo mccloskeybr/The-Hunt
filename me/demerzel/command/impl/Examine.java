@@ -26,6 +26,7 @@ public class Examine extends Command {
             System.out.println("> " + mob.getName() + " | " + mob.getBio());
         }
 
+        GameManager.getInstance().showExits();
         return false;
     }
 }

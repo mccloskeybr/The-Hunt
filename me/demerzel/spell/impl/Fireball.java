@@ -15,7 +15,13 @@ public class Fireball extends Spell{
 
     @Override
     public void onCast(Entity entity) {
-        System.out.println("The enemy is consumed by fire! It took " + getMagnitude() + " damage!");
-        entity.modHealth(-getMagnitude());
+        int damage = Math.min(entity.getHealth(), getMagnitude());
+
+        if(damage < 0){
+            damage = 0;
+        }
+
+        System.out.println("The enemy is consumed by fire! It took " + damage + " damage!");
+        entity.modHealth(-damage);
     }
 }

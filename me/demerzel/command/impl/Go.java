@@ -1,6 +1,7 @@
 package me.demerzel.command.impl;
 
 import me.demerzel.command.Command;
+import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.location.Exit;
 import me.demerzel.location.Location;
@@ -22,6 +23,12 @@ public class Go extends Command{
 
         String direction = args[1];
         Location location = player.getLocation();
+
+        if(location.getMobs(EntityBehavior.HOSTILE).size() > 0){
+            System.out.println("There are enemies in the room! Clear the room to move on!");
+            return false;
+        }
+
         for (Exit exit : location.getExits()) {
             if (exit.getDirectionName().equalsIgnoreCase(direction)) {
                 if(exit.getActive()){

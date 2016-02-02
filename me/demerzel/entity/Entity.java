@@ -2,6 +2,8 @@ package me.demerzel.entity;
 
 import me.demerzel.location.Location;
 import me.demerzel.spell.Spell;
+import me.demerzel.util.Utilities;
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public abstract class Entity {
     }
 
     public String getName() {
-        return name;
+        return WordUtils.capitalizeFully(name);
     }
 
     public void setName(String name) {
@@ -94,6 +96,8 @@ public abstract class Entity {
         this.maxHealth = maxHealth;
     }
 
+    public void modMaxHealth(int amt) { this.maxHealth += amt; }
+
     public int getMaxMana() {
         return maxMana;
     }
@@ -101,6 +105,8 @@ public abstract class Entity {
     public void setMaxMana(int maxMana) {
         this.maxMana = maxMana;
     }
+
+    public void modMaxMana(int amt) { this.maxMana += amt; }
 
     public EntityBehavior getType() {
         return type;
@@ -118,8 +124,13 @@ public abstract class Entity {
         this.location = location;
     }
 
-    public void say(String out){
-        System.out.println("<" + getName() + ">: " + out);
+    public void say(String out, boolean wait){
+        if(wait){
+            Utilities.cmd("<" + getName() + ">: " + out);
+            System.out.println("Press <Enter> to continue...");
+        }else{
+            System.out.println("<" + getName() + ">: " + out);
+        }
     }
 
     public ArrayList<Spell> getSpells() {
@@ -148,5 +159,10 @@ public abstract class Entity {
         }
 
         return false;
+    }
+
+    public void heal(){
+        setHealth(getMaxHealth());
+        setMana(getMaxMana());
     }
 }

@@ -3,11 +3,13 @@ package me.demerzel.util;
 import me.demerzel.command.Command;
 import me.demerzel.command.CommandManager;
 import me.demerzel.command.impl.*;
-import me.demerzel.entity.EntityMob;
-import me.demerzel.entity.EntityPlayer;
-import me.demerzel.entity.EventKilled;
+import me.demerzel.entity.*;
 import me.demerzel.location.Location;
+import me.demerzel.spell.LingerEffect;
+import me.demerzel.spell.Spell;
+import me.demerzel.spell.SpellTarget;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -20,12 +22,11 @@ public class BattleManager {
     private EntityMob enemy;
     private CommandManager manager;
     private ArrayList<Class<? extends Command>> allowedCommands;
+    private ArrayList<Spell> lingeringSpells;
 
-    public BattleManager(Location old, EntityMob enemy){
-        this.enemy = enemy;
-        this.player = GameManager.getInstance().getPlayer();
-        manager = GameManager.getInstance().getFactory();
+    public BattleManager(){
         allowedCommands = new ArrayList<>();
+        lingeringSpells = new ArrayList<>();
 
         allowedCommands.add(Cast.class);
         allowedCommands.add(Crap.class);
@@ -36,13 +37,23 @@ public class BattleManager {
         allowedCommands.add(Use.class);
         allowedCommands.add(Wallet.class);
         allowedCommands.add(Attack.class);
+        allowedCommands.add(Cheat.class);
+    }
 
+    public void beginBattle(Location old, EntityMob enemy){
+        this.enemy = enemy;
+        this.player = GameManager.getInstance().getPlayer();
+        manager = GameManager.getInstance().getFactory();
         myTurn = enemy.getSpeed() <= player.getSpeed();
 
         System.out.println("============================");
         System.out.println("        BEGIN BATTLE!       ");
         System.out.println("============================");
         GameManager.getInstance().showEntities();
+
+        if(enemy instanceof EventBattle){
+            ((EventBattle) enemy).onBattle();
+        }
 
         while(!isEnded()){
             nextTurn();
@@ -65,18 +76,29 @@ public class BattleManager {
             System.out.println("============================");
         }
 
+        lingeringSpells.clear();
+    }
 
+    public void addLingerEffect(Spell spell){
+        lingeringSpells.add(spell);
     }
 
     private void nextTurn(){
         if(myTurn){
             String command = Utilities.cmd("");
             String[] args = Utilities.parseInput(command);
+
+            if(args.length < 1){
+                return;
+            }
+
             Command cmd = manager.getCommand(args[0]);
             if(cmd != null){
                 if(isAllowed(command)){
                     cmd.execute(args, player);
-                    myTurn = false;
+                    if(cmd.getClass().equals(Attack.class) || cmd.getClass().equals(Cast.class) || cmd.getClass().equals(Use.class)){
+                        myTurn = false;
+                    }
                 }else{
                     System.out.println("You can't use that command in battle!");
                 }
@@ -85,8 +107,18 @@ public class BattleManager {
             }
         }else{
             enemy.attack(player);
+            for(Spell spell : lingeringSpells){
+                if(spell.getTarget() == SpellTarget.SELF){
+                    ((LingerEffect) spell).fire(player);
+                }else{
+                    ((LingerEffect) spell).fire(enemy);
+                }
+            }
             myTurn = true;
+            System.out.println("Your Move!");
         }
+
+
     }
 
     private boolean isEnded(){

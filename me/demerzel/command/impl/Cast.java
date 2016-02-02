@@ -7,6 +7,7 @@ import me.demerzel.entity.EntityPlayer;
 import me.demerzel.entity.EventKilled;
 import me.demerzel.item.ItemSlot;
 import me.demerzel.item.ItemType;
+import me.demerzel.spell.LingerEffect;
 import me.demerzel.spell.Spell;
 import me.demerzel.spell.SpellManager;
 import me.demerzel.spell.SpellTarget;
@@ -26,7 +27,6 @@ public class Cast extends Command {
     @Override
     public boolean execute(String[] args, EntityPlayer player) {
         SpellManager spellManager = new SpellManager();
-        ArrayList<EntityMob> dead = new ArrayList<>();
 
         if(args.length < 2){
             System.out.println("Usage: cast <spell> <target>");
@@ -58,6 +58,10 @@ public class Cast extends Command {
             System.out.println();
         }else{
             spell.onCast(player);
+        }
+
+        if(spell instanceof LingerEffect){
+            GameManager.getInstance().getBattleManager().addLingerEffect(spell);
         }
 
         player.modMana(-spell.getCost());

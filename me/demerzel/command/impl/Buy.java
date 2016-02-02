@@ -3,7 +3,7 @@ package me.demerzel.command.impl;
 import me.demerzel.command.Command;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
-import me.demerzel.entity.impl.Shopkeeper;
+import me.demerzel.entity.impl.shopkeepers.Shopkeeper;
 
 /**
  * Created by Demerzel on 1/29/16.

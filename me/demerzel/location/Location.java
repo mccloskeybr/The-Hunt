@@ -1,10 +1,12 @@
 package me.demerzel.location;
 
+import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.item.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 
 public abstract class Location {
@@ -127,6 +129,10 @@ public abstract class Location {
 
     public ArrayList<EntityMob> getMobs(){
         return mobs;
+    }
+
+    public ArrayList<EntityMob> getMobs(EntityBehavior behavior){
+        return this.getMobs().stream().filter(mob -> mob.getType() == behavior).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public EntityMob getMob(int i){

@@ -6,7 +6,7 @@ import me.demerzel.command.impl.*;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
-import me.demerzel.item.impl.Fists;
+import me.demerzel.item.impl.weapon.Fists;
 import me.demerzel.location.Location;
 import me.demerzel.location.impl.*;
 import me.demerzel.location.Exit;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class GameManager {
     private static GameManager gameManager;
     private CommandManager factory = new CommandManager();
+    private BattleManager battleManager;
     private ArrayList<Class<? extends Command>> allowedCommands;
     private EntityPlayer player;
 
@@ -36,7 +37,9 @@ public class GameManager {
         allowedCommands.add(Use.class);
         allowedCommands.add(Wallet.class);
         allowedCommands.add(Cheat.class);
+        allowedCommands.add(Help.class);
 
+        battleManager = new BattleManager();
     }
 
     public static GameManager getInstance(){
@@ -63,16 +66,20 @@ public class GameManager {
         Location ventEntrance = new VentEntrance();
         Location ventWest = new VentWest();
         Location ventEast = new VentEast();
-        Location store = new Store();
+        Location ventMoreWest = new VentMoreWest();
 
         start.addExit(new Exit(Exit.WEST, ventEntrance, true));
-        start.addExit(new Exit(Exit.NORTH, store, true));
-        store.addExit(new Exit(Exit.SOUTH, start, true));
+
         ventEntrance.addExit(new Exit(Exit.WEST, ventWest, true));
         ventEntrance.addExit(new Exit(Exit.EAST, ventEast, true));
         ventEntrance.addExit(new Exit(Exit.OUT, start, true));
+
         ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
+
         ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
+        ventWest.addExit(new Exit(Exit.WEST, ventMoreWest, true));
+
+        ventMoreWest.addExit(new Exit(Exit.EAST, ventWest, true));
 
         player = new EntityPlayer("Main Character", "Character Bio", start);
 
@@ -84,12 +91,18 @@ public class GameManager {
     public void showLocation(){
         System.out.println(player.getLocation().getTitle());
         System.out.println(player.getLocation().getDescription() + "\n");
+
+        showExits();
+        showEntities();
+    }
+
+    public void showExits(){
         System.out.println("Possible exits:");
 
         ArrayList<Exit> exits = player.getLocation().getExits();
-        exits.stream().filter(Exit::getActive).forEach(exit -> System.out.println(exit.toString()));
-
-        showEntities();
+        for(Exit exit : exits){
+            System.out.println(exit.toString() + " | " + exit.getLeadsTo().getTitle());
+        }
     }
 
     public void showEntities(){
@@ -102,8 +115,13 @@ public class GameManager {
     }
 
     public boolean action(){
-        String command = Utilities.cmd("");
+        String command = Utilities.cmd("> ");
         String[] args = Utilities.parseInput(command);
+
+        if(args.length < 1){
+            return false;
+        }
+
         Command cmd = factory.getCommand(args[0]);
         if(cmd != null){
             if(isAllowed(command)){
@@ -133,5 +151,9 @@ public class GameManager {
         }
 
         return false;
+    }
+
+    public BattleManager getBattleManager(){
+        return battleManager;
     }
 }

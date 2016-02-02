@@ -7,11 +7,11 @@ import me.demerzel.spell.SpellTarget;
 import me.demerzel.spell.SpellType;
 
 /**
- * Created by Demerzel on 1/31/16.
+ * Created by Demerzel on 2/1/16.
  */
-public class Firestorm extends Spell {
-    public Firestorm() {
-        super("Firestorm", "A destructive storm of fire envelops your enemies!", 20, 15, SpellType.FIREONCE, SpellElement.FIRE, SpellTarget.MULTITARGET);
+public class Thunderbolt extends Spell {
+    public Thunderbolt() {
+        super("Thunderbolt", "Blasts an enemy with the power of lightning", 25, 30, SpellType.FIREONCE, SpellElement.THUNDER, SpellTarget.SINGLETARGET);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Firestorm extends Spell {
             damage = 0;
         }
 
-        System.out.println("The enemy is consumed by fire! It took " + damage + " damage!");
+        System.out.println("The enemy was blasted with electricity! It took " + damage + " damage!");
         entity.modHealth(-damage);
     }
 }

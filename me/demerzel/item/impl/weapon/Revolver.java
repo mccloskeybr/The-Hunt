@@ -1,4 +1,4 @@
-package me.demerzel.item.impl;
+package me.demerzel.item.impl.weapon;
 
 import me.demerzel.item.Item;
 import me.demerzel.item.ItemSlot;
@@ -9,6 +9,6 @@ import me.demerzel.item.ItemType;
  */
 public class Revolver extends Item{
     public Revolver(){
-        super(2, 0, 10, 100, "Revolver", "A medium-sized hand gun. Packs quite a wallop!", "", true, ItemSlot.WEAPON, ItemType.SINGLETARGET);
+        super(0, 10, 100, "Revolver", "A medium-sized hand gun. Packs quite a wallop!", "", true, ItemSlot.WEAPON, ItemType.SINGLETARGET);
     }
 }

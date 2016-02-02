@@ -19,18 +19,15 @@ public class Cheat extends Command {
                 player.modExperience(Integer.parseInt(args[1]));
                 System.out.println("Added " + args[1] + " EXP.");
                 break;
-            case "god":
-                player.setGod(true);
-                System.out.println("You are now invincible.");
-                break;
-            case "ungod":
-                player.setGod(false);
-                System.out.println("You can now be damaged.");
-                break;
             case "additem":
                 ItemManager manager = new ItemManager();
                 player.addItem(manager.getItem(args[1]));
                 System.out.println("Added " + args[1] + " to your inventory.");
+                break;
+            case "heal":
+                player.setHealth(player.getMaxHealth());
+                player.setMana(player.getMaxMana());
+                System.out.println("Healed to max health.");
                 break;
         }
 

@@ -26,6 +26,7 @@ public class Heal extends Spell {
 
 
         entity.modHealth(healed);
-        System.out.println("A magical energy repairs your wounds! You gained " + healed + " HP!");
+        System.out.println();
+        System.out.println("A magical energy repairs your wounds! You gained " + healed + " HP! Remaining HP: [" + entity.getHealth() + "]");
     }
 }
