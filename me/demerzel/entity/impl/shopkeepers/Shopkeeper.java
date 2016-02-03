@@ -13,14 +13,16 @@ import me.demerzel.item.impl.weapon.Revolver;
 import me.demerzel.location.Location;
 import me.demerzel.util.GameManager;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Created by Demerzel on 1/29/16.
  */
 public abstract class Shopkeeper extends EntityMob implements EventInteract {
     private String interact;
 
-    public Shopkeeper(String name, Location location, String interact) {
-        super(name, "A man born to sell goods. When you buy his stuff, you give him purpose in life.", 5, 0, 1, location, 100000, 2000, 1, "The Shopkeeper punches you in the nose!", EntityBehavior.NEUTRAL);
+    public Shopkeeper(BufferedImage image, String name, Location location, String interact) {
+        super(image, name, "A man born to sell goods. When you buy his stuff, you give him purpose in life.", 5, 0, 1, location, 100000, 2000, 1, "The Shopkeeper punches you in the nose!", EntityBehavior.NEUTRAL);
         this.interact = interact;
     }
 

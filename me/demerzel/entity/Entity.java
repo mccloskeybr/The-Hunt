@@ -5,6 +5,7 @@ import me.demerzel.spell.Spell;
 import me.demerzel.util.Utilities;
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -165,4 +166,5 @@ public abstract class Entity {
         setHealth(getMaxHealth());
         setMana(getMaxMana());
     }
+
 }

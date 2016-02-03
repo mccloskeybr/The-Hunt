@@ -4,6 +4,8 @@ import me.demerzel.item.Item;
 import me.demerzel.location.Location;
 import me.demerzel.util.GameManager;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -16,13 +18,16 @@ public abstract class EntityMob extends Entity {
     private String attackText;
     private ArrayList<Item> loot;
 
-    public EntityMob(String name, String bio, int maxHealth, int maxMana, int speed, Location location, int expRewarded, int moneyRewarded, int strength, String attackText, EntityBehavior type) {
+    private BufferedImage image;
+
+    public EntityMob(BufferedImage image, String name, String bio, int maxHealth, int maxMana, int speed, Location location, int expRewarded, int moneyRewarded, int strength, String attackText, EntityBehavior type) {
         super(name, bio, maxHealth, maxMana, speed, location, type);
         this.loot = new ArrayList<>();
         this.expRewarded = expRewarded;
         this.moneyRewarded = moneyRewarded;
         this.strength = strength;
         this.attackText = attackText;
+        this.image = image;
     }
 
     public int getExpRewarded() {
@@ -109,5 +114,9 @@ public abstract class EntityMob extends Entity {
         GameManager.getInstance().getPlayer().modExperience(getExpRewarded());
         GameManager.getInstance().getPlayer().modMoney(getMoneyRewarded());
         System.out.println();
+    }
+
+    public void render(Graphics g, int x, int y){
+        g.drawImage(image, x, y, null);
     }
 }

@@ -4,6 +4,7 @@ import me.demerzel.entity.*;
 import me.demerzel.location.Location;
 import me.demerzel.spell.impl.Fireball;
 import me.demerzel.util.GameManager;
+import me.demerzel.util.ImageManager;
 import me.demerzel.util.Utilities;
 
 /**
@@ -11,7 +12,7 @@ import me.demerzel.util.Utilities;
  */
 public class Dragon extends EntityMob implements EventKilled, EventBattle{
     public Dragon(Location location) {
-        super("The Dragon", "The Final Boss", 300, 500, 7, location, 1000, 4000, 30, "The Dragon breathes fire at you! You offer him a breath mint, but he declines.", EntityBehavior.HOSTILE);
+        super(new ImageManager().loadImage("/assets/image/entities/dragon.png"),"The Dragon", "The Final Boss", 300, 500, 7, location, 1000, 4000, 30, "The Dragon breathes fire at you! You offer him a breath mint, but he declines.", EntityBehavior.HOSTILE);
     }
 
     @Override

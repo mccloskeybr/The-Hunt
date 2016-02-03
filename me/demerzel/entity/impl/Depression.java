@@ -5,6 +5,7 @@ import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.location.Location;
+import me.demerzel.util.ImageManager;
 
 import java.util.Random;
 
@@ -20,7 +21,7 @@ public class Depression extends EntityMob {
     };
 
     public Depression(Location location) {
-        super("Depression", "The TRUE enemy of humanity", 300, 200, 3, location, 1, 1, 20, "Depression makes you feel bad!", EntityBehavior.HOSTILE);
+        super(new ImageManager().loadImage("/assets/image/entities/depression.png"), "Depression", "The TRUE enemy of humanity", 300, 200, 3, location, 1, 1, 20, "Depression makes you feel bad!", EntityBehavior.HOSTILE);
     }
 
     @Override

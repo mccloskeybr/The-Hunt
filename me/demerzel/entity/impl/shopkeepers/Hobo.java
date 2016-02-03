@@ -1,9 +1,6 @@
 package me.demerzel.entity.impl.shopkeepers;
 
-import me.demerzel.command.impl.Spellbook;
-import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EventInteract;
-import me.demerzel.item.Item;
 import me.demerzel.item.impl.armor.BodyArmor;
 import me.demerzel.item.impl.misc.BookThunderbolt;
 import me.demerzel.item.impl.misc.HealthPot;
@@ -12,13 +9,14 @@ import me.demerzel.item.impl.weapon.BasicBow;
 import me.demerzel.item.impl.weapon.Revolver;
 import me.demerzel.location.Location;
 import me.demerzel.util.GameManager;
+import me.demerzel.util.ImageManager;
 
 /**
  * Created by Demerzel on 2/2/16.
  */
 public class Hobo extends Shopkeeper implements EventInteract {
     public Hobo(String name, Location location) {
-        super(name, location, "Hey there sonny! I got a nice surprise for you. Just step right over here...");
+        super(new ImageManager().loadImage("/assets/image/hobo.png"), name, location, "Hey there sonny! I got a nice surprise for you. Just step right over here...");
 
         addLoot(new Revolver());
         addLoot(new BodyArmor());

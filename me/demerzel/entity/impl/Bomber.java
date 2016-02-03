@@ -5,13 +5,14 @@ import me.demerzel.entity.EntityPlayer;
 import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EventKilled;
 import me.demerzel.location.Location;
+import me.demerzel.util.ImageManager;
 
 /**
  * Created by Demerzel on 1/28/16.
  */
 public class Bomber extends EntityMob implements EventKilled {
     public Bomber(Location location) {
-        super("Bomber", "An enemy with suicidal tendencies. If they spot you, they'll rush at you.", 5, 0, 6, location, 15, 2, 50, "The Bomber rushes at you! He explodes!", EntityBehavior.HOSTILE);
+        super(new ImageManager().loadImage("/assets/image/entities/bomber.png"), "Bomber", "An enemy with suicidal tendencies. If they spot you, they'll rush at you.", 5, 0, 6, location, 15, 2, 50, "The Bomber rushes at you! He explodes!", EntityBehavior.HOSTILE);
     }
 
     @Override
