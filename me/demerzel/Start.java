@@ -35,7 +35,7 @@ public class Start {
             case "the body":
                 gameManager.getPlayer().modMaxHealth(15);
                 gameManager.getPlayer().modMaxMana(-20);
-                System.out.println("So you value the Body more?");
+                System.out.println("So you value the Body more? Alright");
                 break;
             case "both":
                 gameManager.getPlayer().modMaxMana(5);
