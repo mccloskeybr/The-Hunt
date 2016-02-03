@@ -1,12 +1,18 @@
 package me.demerzel.util;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import me.demerzel.command.Command;
 import org.jetbrains.annotations.Contract;
+<<<<<<< HEAD
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
+=======
+import java.util.*;
+>>>>>>> VolitionDevelopment/master
 
 /**
  * Created by Demerzel on 1/28/16.
@@ -33,7 +39,7 @@ public class Utilities {
 
         Collections.addAll(parsedArray, input.split("\\s+"));
 
-        return parsedArray.toArray(new String[0]);
+        return parsedArray.toArray(new String[parsedArray.size()]);
     }
 
     @Contract("null -> false")

@@ -142,8 +142,12 @@ public class GameManager extends JPanel{
     }
 
     public boolean action(){
+<<<<<<< HEAD
         String command = cmdBox.getText();
         cmdBox.setText("");
+=======
+        String command = Utilities.cmd("");
+>>>>>>> VolitionDevelopment/master
         String[] args = Utilities.parseInput(command);
 
         if(args.length < 1){

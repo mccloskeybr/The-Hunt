@@ -9,12 +9,12 @@ import me.demerzel.spell.impl.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by Demerzel on 1/28/16.
  */
 public class EntityPlayer extends Entity {
-    private final double LEVEL_CONSTANT = 0.115;
 
     private int level;
     private int baseAttack;
@@ -61,9 +61,12 @@ public class EntityPlayer extends Entity {
         this.experience += amt;
 
         while(nextLevel() <= 0){
-            int addedHp = (int) Math.max(1, 2 * getLevel(getExperience() + amt));
-            int addedStr = (int) Math.max(1, 1.1 * getLevel(getExperience() + amt));
-            int addedSpd = (int) Math.max(1, 1.3 * getLevel(getExperience() + amt));
+            Random r = new Random();
+
+
+            int addedHp = (int) Math.max(1, r.nextInt(15));
+            int addedStr = (int) Math.max(1, r.nextInt(3));
+            int addedSpd = (int) Math.max(1, r.nextInt(3));
 
             level++;
 
@@ -78,8 +81,6 @@ public class EntityPlayer extends Entity {
             baseAttack += addedStr;
             baseSpeed += addedSpd;
             heal();
-
-
         }
     }
 
@@ -159,10 +160,11 @@ public class EntityPlayer extends Entity {
     }
 
     public int getLevel(int experience){
-        return (int) (Math.sqrt(100 * (2 * experience + 25)) + 50) / 100;
+        return (int) (-5/2 + (Math.sqrt(experience + 125) / (2 * Math.sqrt(5))));
     }
 
     public int nextLevel(){
-        return (int) (Math.pow(getLevel() / LEVEL_CONSTANT, 2) - getExperience());
+        double LEVEL_CONSTANT = 20;
+        return (int) (LEVEL_CONSTANT * (level) * (level + 5) - getExperience());
     }
 }
