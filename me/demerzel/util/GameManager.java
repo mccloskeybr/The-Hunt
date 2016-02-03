@@ -115,7 +115,7 @@ public class GameManager {
     }
 
     public boolean action(){
-        String command = Utilities.cmd("> ");
+        String command = Utilities.cmd("");
         String[] args = Utilities.parseInput(command);
 
         if(args.length < 1){

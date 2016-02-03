@@ -1,11 +1,10 @@
 package me.demerzel.util;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import me.demerzel.command.Command;
-import me.demerzel.command.CommandManager;
 import org.jetbrains.annotations.Contract;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Demerzel on 1/28/16.
@@ -31,7 +30,7 @@ public class Utilities {
 
         Collections.addAll(parsedArray, input.split("\\s+"));
 
-        return parsedArray.toArray(new String[0]);
+        return parsedArray.toArray(new String[parsedArray.size()]);
     }
 
     @Contract("null -> false")
