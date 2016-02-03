@@ -1,9 +1,12 @@
 package me.demerzel.location;
 
+import me.demerzel.Window;
 import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.item.Item;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -18,8 +21,9 @@ public abstract class Location {
     private ArrayList<Item> items;
     private ArrayList<Item> usableItems;
     private ArrayList<EntityMob> mobs;
+    private BufferedImage image;
 
-    public Location(String title, String description, HashMap<Integer, String> states, int state, ArrayList<Exit> exits, ArrayList<Item> items, ArrayList<Item> usableItems, ArrayList<EntityMob> mobs) {
+    public Location(BufferedImage image, String title, String description, HashMap<Integer, String> states, int state, ArrayList<Exit> exits, ArrayList<Item> items, ArrayList<Item> usableItems, ArrayList<EntityMob> mobs) {
         this.title = title;
         this.description = description;
         this.states = states;
@@ -28,10 +32,11 @@ public abstract class Location {
         this.items = items;
         this.usableItems = usableItems;
         this.mobs = mobs;
+        this.image = image;
     }
 
-    public Location(String title, String description){
-        this(title, description, new HashMap<>(), 1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    public Location(BufferedImage image, String title, String description){
+        this(image, title, description, new HashMap<>(), 1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     public String toString(){
@@ -150,6 +155,18 @@ public abstract class Location {
     public void removeMob(EntityMob mob){
         if(mobs.contains(mob)){
             mobs.remove(mob);
+        }
+    }
+
+    public void render(Graphics g){
+
+        g.drawImage(image, 0, 0, Window.WINDOW_SIZE, Window.WINDOW_SIZE, null);
+
+        for (int i = 0; i < mobs.size(); i++) {
+            if (i % 2 == 0)
+                mobs.get(i).render(g, Window.WINDOW_SIZE / 2 + 64 * i, 200);
+            else
+                mobs.get(i).render(g, Window.WINDOW_SIZE / 2 - 64 * i, 200);
         }
     }
 }

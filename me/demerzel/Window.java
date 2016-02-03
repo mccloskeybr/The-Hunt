@@ -15,14 +15,14 @@ public class Window {
     public Window(){
         frame = new JFrame();
         frame.setTitle("The Hunt");
-        frame.setSize(WINDOW_SIZE, WINDOW_SIZE);
+        frame.setSize(WINDOW_SIZE, WINDOW_SIZE * 2);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setBackground(Color.BLACK);
         frame.setVisible(true);
     }
-    
+
     public void addComponent(Component component){
         frame.add(component);
     }

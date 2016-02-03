@@ -1,5 +1,6 @@
 package me.demerzel.util;
 
+import me.demerzel.Window;
 import me.demerzel.command.Command;
 import me.demerzel.command.CommandManager;
 import me.demerzel.command.impl.*;
@@ -7,18 +8,25 @@ import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 import me.demerzel.item.impl.weapon.Fists;
+import me.demerzel.location.Exit;
 import me.demerzel.location.Location;
 import me.demerzel.location.impl.*;
-import me.demerzel.location.Exit;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
-public class GameManager {
+public class GameManager extends JPanel{
     private static GameManager gameManager;
     private CommandManager factory = new CommandManager();
     private BattleManager battleManager;
     private ArrayList<Class<? extends Command>> allowedCommands;
     private EntityPlayer player;
+
+    private JTextArea infoBox;
+    private JTextField cmdBox;
+
+    private Window window;
 
     private GameManager(){
         allowedCommands = new ArrayList<>();
@@ -40,6 +48,25 @@ public class GameManager {
         allowedCommands.add(Help.class);
 
         battleManager = new BattleManager();
+
+        infoBox = new JTextArea();
+        infoBox.setBounds(5, Window.WINDOW_SIZE + 30, Window.WINDOW_SIZE - 10, Window.WINDOW_SIZE - 40);
+        infoBox.setEditable(false);
+        infoBox.setLineWrap(true);
+        infoBox.setVisible(true);
+        infoBox.setText("Info area!");
+
+        cmdBox = new JTextField();
+        cmdBox.setBounds(5, Window.WINDOW_SIZE, Window.WINDOW_SIZE, 30);
+        cmdBox.addActionListener(e -> action());
+        cmdBox.setEditable(true);
+        cmdBox.setText("Command area!");
+
+        window = new Window();
+        window.addComponent(this);
+        window.addComponent(infoBox);
+        window.addComponent(cmdBox);
+
     }
 
     public static GameManager getInstance(){
@@ -115,7 +142,8 @@ public class GameManager {
     }
 
     public boolean action(){
-        String command = Utilities.cmd("> ");
+        String command = cmdBox.getText();
+        cmdBox.setText("");
         String[] args = Utilities.parseInput(command);
 
         if(args.length < 1){
@@ -155,5 +183,13 @@ public class GameManager {
 
     public BattleManager getBattleManager(){
         return battleManager;
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        player.getLocation().render(g);
+
+        infoBox.repaint();
+        cmdBox.repaint();
     }
 }

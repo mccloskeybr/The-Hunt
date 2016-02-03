@@ -1,16 +1,18 @@
 package me.demerzel.util;
 
 import me.demerzel.command.Command;
-import me.demerzel.command.CommandManager;
 import org.jetbrains.annotations.Contract;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  * Created by Demerzel on 1/28/16.
  */
 public class Utilities {
+
     public static String cmd(String output){
         System.out.println(output);
         Scanner input = new Scanner(System.in);
