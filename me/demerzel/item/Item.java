@@ -1,10 +1,12 @@
 package me.demerzel.item;
 
 
+import me.demerzel.spell.SpellManager;
+
 public abstract class Item {
-    private int id;
     private int armor;
-    private int damage;
+    private int magnitude;
+    private int price;
     private String name;
     private String description;
     private String useText;
@@ -12,11 +14,11 @@ public abstract class Item {
     private ItemSlot slot;
     private ItemType type;
 
-    public Item(int id, int armor, int damage, String name, String description, String useText, boolean permanent, ItemSlot slot, ItemType type){
-        this.id = id;
+    public Item(int armor, int magnitude, int price, String name, String description, String useText, boolean permanent, ItemSlot slot, ItemType type){
         this.name = name;
         this.armor = armor;
-        this.damage = damage;
+        this.magnitude = magnitude;
+        this.price = price;
         this.description = description;
         this.useText = useText;
         this.permanent = permanent;
@@ -24,20 +26,8 @@ public abstract class Item {
         this.type = type;
     }
 
-    public Item(){
-        this(0, 0, 0, "Null item", "Null desc", "Nothing", true, ItemSlot.DEFAULT, ItemType.DEFAULT);
-    }
-
     public String toString(){
         return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -88,19 +78,31 @@ public abstract class Item {
         this.armor = armor;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getMagnitude() {
+        return magnitude;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setMagnitude(int magnitude) {
+        this.magnitude = magnitude;
     }
 
     public ItemType getType() {
         return type;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public void setType(ItemType type) {
         this.type = type;
+    }
+
+    public void register(ItemManager itemManager){
+        itemManager.add(name.toLowerCase(), this);
     }
 }

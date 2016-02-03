@@ -14,6 +14,11 @@ public class Pickup extends Command {
 
     @Override
     public boolean execute(String[] args, EntityPlayer player) {
+        if(args.length < 2){
+            System.out.println("Pick up what?");
+            return false;
+        }
+
         Location location = player.getLocation();
 
         for(Item item: location.getItems()){

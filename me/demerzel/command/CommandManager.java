@@ -2,7 +2,10 @@ package me.demerzel.command;
 
 import me.demerzel.command.impl.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CommandManager {
     private HashMap<String, Command> commandHashMap;
@@ -10,23 +13,38 @@ public class CommandManager {
     public CommandManager(){
         commandHashMap = new HashMap<>();
 
-        new Attack("attack").setDescription("Attack an entity. Usage: attack <integer>").register(this);
-        new Crap("crap", "poo", "poop").setDescription("Take a poo right where you're standing.").register(this);
+        new Battle("battle").setDescription("Battle an entity. Usage: battle <integer>").register(this);
+        new Crap("crap", "poo", "poop", "take a poop", "take a crap").setDescription("Take a poo right where you're standing.").register(this);
         new Dance("dance").setDescription("Break out into a killer dance").register(this);
-        new Die("die", "suicide").setDescription("Drop dead in the middle of the room.").register(this);
-        new Equip("equip").setDescription("Equip an item from your inventory. Usage: equip <item>").register(this);
-        new Examine("examine", "look").setDescription("Examine the room you're in more closely.").register(this);
-        new Go("go", "move").setDescription("Move to another room. Usage: go <direction>").register(this);
-        new Inventory("items", "inventory").setDescription("Look at your inventory along with your current stats.").register(this);
-        new Pickup("pickup").setDescription("Pick up an item off the ground. Usage: pickup <item>").register(this);
-        new Sell("sell").setDescription("Not currently in use.").register(this);
-        new Use("use").setDescription("Use an item from your inventory. Usage: use <item>").register(this);
-        new Wallet("wallet", "money").setDescription("View your wallet.").register(this);
+        new Die("die", "suicide", "drop dead").setDescription("Drop dead in the middle of the room.").register(this);
+        new Equip("equip", "equip the").setDescription("Equip an item from your inventory. Usage: equip <item>").register(this);
+        new Examine("examine", "look closer", "take a closer look", "look at", "look at the").setDescription("Examine the room you're in more closely.").register(this);
+        new Go("go", "go to", "move", "move to").setDescription("Move to another room. Usage: go <direction>").register(this);
+        new Inventory("items", "inventory", "list items", "show inventory", "show items").setDescription("Look at your inventory along with your current stats.").register(this);
+        new Pickup("pickup", "pick up", "pick up the").setDescription("Pick up an item off the ground. Usage: pickup <item>").register(this);
+        new Sell("sell", "sell the").setDescription("Not currently in use.").register(this);
+        new Wallet("wallet", "money", "open wallet").setDescription("View your wallet.").register(this);
+        new Buy("buy", "purchase").setDescription("Buy an item").register(this);
+        new Interact("interact", "talk", "talk to").setDescription("Interact with an entity").register(this);
+        new Cast("cast").setDescription("Cast a spell at an enemy. Usage: cast <spell> <integer>").register(this);
+        new Use("use").setDescription("Use an item from your inventory").register(this);
+        new Spellbook("spells", "spellbook").setDescription("View your currently known spells.").register(this);
+        new Attack("attack").setDescription("The basic attack move.").register(this);
+        new Cheat("addexp", "god", "ungod", "additem", "heal").setDescription("A few cheats").register(this);
+        new Use("use").setDescription("Use an item").register(this);
+        new Help("help").setDescription("Get help with commands").register(this);
     }
 
     public Command getCommand(String cmd){
         return commandHashMap.get(cmd);
     }
+
+    public ArrayList<String> getAliases(Class<? extends Command> get){
+
+        return commandHashMap.entrySet().stream().filter(command -> command.getValue().getClass().equals(get)).map(HashMap.Entry::getKey).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public HashMap<String, Command> getCommandHashMap(){ return commandHashMap;}
 
     public void add(String in, Command command){
         commandHashMap.put(in, command);

@@ -1,12 +1,12 @@
 package me.demerzel.location;
 
-import me.demerzel.entity.Entity;
+import me.demerzel.entity.EntityBehavior;
 import me.demerzel.entity.EntityMob;
-import me.demerzel.entity.EntityPlayer;
 import me.demerzel.item.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 
 public abstract class Location {
@@ -31,7 +31,7 @@ public abstract class Location {
     }
 
     public Location(String title, String description){
-        this(title, description, new HashMap<Integer, String>(), 1, new ArrayList<Exit>(), new ArrayList<Item>(), new ArrayList<>(), new ArrayList<>());
+        this(title, description, new HashMap<>(), 1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     public String toString(){
@@ -112,7 +112,7 @@ public abstract class Location {
     }
 
     public String getCurrentState(){
-        return states.get(new Integer(this.state));
+        return states.get(this.state);
     }
 
     public void addState(int state, String description){
@@ -131,14 +131,16 @@ public abstract class Location {
         return mobs;
     }
 
-    public EntityMob getMob(int uid){
-        for(EntityMob mob:mobs){
-            if(mob.getUid() == uid){
-                return mob;
-            }
-        }
+    public ArrayList<EntityMob> getMobs(EntityBehavior behavior){
+        return this.getMobs().stream().filter(mob -> mob.getType() == behavior).collect(Collectors.toCollection(ArrayList::new));
+    }
 
-        return null;
+    public EntityMob getMob(int i){
+        try{
+            return getMobs().get(i);
+        }catch(IndexOutOfBoundsException e){
+            return null;
+        }
     }
 
     public void addMob(EntityMob mob){

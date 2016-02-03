@@ -2,26 +2,44 @@ package me.demerzel.util;
 
 import me.demerzel.command.Command;
 import me.demerzel.command.CommandManager;
+import me.demerzel.command.impl.*;
 import me.demerzel.entity.EntityMob;
 import me.demerzel.entity.EntityPlayer;
-import me.demerzel.item.impl.*;
+import me.demerzel.item.Item;
+import me.demerzel.item.impl.weapon.Fists;
 import me.demerzel.location.Location;
-import me.demerzel.location.impl.Start;
-import me.demerzel.location.impl.VentEast;
-import me.demerzel.location.impl.VentEntrance;
-import me.demerzel.location.impl.VentWest;
+import me.demerzel.location.impl.*;
 import me.demerzel.location.Exit;
 
 import java.util.ArrayList;
 
 public class GameManager {
     private static GameManager gameManager;
-
-    private static CommandManager factory = new CommandManager();
-    private static EntityPlayer player;
+    private CommandManager factory = new CommandManager();
+    private BattleManager battleManager;
+    private ArrayList<Class<? extends Command>> allowedCommands;
+    private EntityPlayer player;
 
     private GameManager(){
+        allowedCommands = new ArrayList<>();
+        allowedCommands.add(Battle.class);
+        allowedCommands.add(Buy.class);
+        allowedCommands.add(Crap.class);
+        allowedCommands.add(Dance.class);
+        allowedCommands.add(Die.class);
+        allowedCommands.add(Equip.class);
+        allowedCommands.add(Examine.class);
+        allowedCommands.add(Go.class);
+        allowedCommands.add(Interact.class);
+        allowedCommands.add(Inventory.class);
+        allowedCommands.add(Pickup.class);
+        allowedCommands.add(Spellbook.class);
+        allowedCommands.add(Use.class);
+        allowedCommands.add(Wallet.class);
+        allowedCommands.add(Cheat.class);
+        allowedCommands.add(Help.class);
 
+        battleManager = new BattleManager();
     }
 
     public static GameManager getInstance(){
@@ -48,51 +66,94 @@ public class GameManager {
         Location ventEntrance = new VentEntrance();
         Location ventWest = new VentWest();
         Location ventEast = new VentEast();
+        Location ventMoreWest = new VentMoreWest();
 
         start.addExit(new Exit(Exit.WEST, ventEntrance, true));
+
         ventEntrance.addExit(new Exit(Exit.WEST, ventWest, true));
         ventEntrance.addExit(new Exit(Exit.EAST, ventEast, true));
-        ventEntrance.addExit(new Exit(Exit.SOUTH, start, true));
-        ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
-        ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
+        ventEntrance.addExit(new Exit(Exit.OUT, start, true));
 
-        player = new EntityPlayer("Sergeant Wolf", "A badass sergenat", start);
+        ventEast.addExit(new Exit(Exit.WEST, ventEntrance, true));
+
+        ventWest.addExit(new Exit(Exit.EAST, ventEntrance, true));
+        ventWest.addExit(new Exit(Exit.WEST, ventMoreWest, true));
+
+        ventMoreWest.addExit(new Exit(Exit.EAST, ventWest, true));
+
+        player = new EntityPlayer("Main Character", "Character Bio", start);
+
+        Item fist = new Fists();
+        player.addItem(fist);
+        player.equip(fist);
     }
 
     public void showLocation(){
         System.out.println(player.getLocation().getTitle());
         System.out.println(player.getLocation().getDescription() + "\n");
+
+        showExits();
+        showEntities();
+    }
+
+    public void showExits(){
         System.out.println("Possible exits:");
 
         ArrayList<Exit> exits = player.getLocation().getExits();
-        exits.stream().filter(Exit::getActive).forEach(exit -> System.out.println(exit.toString()));
-
-        showEnemies();
+        for(Exit exit : exits){
+            System.out.println(exit.toString() + " | " + exit.getLeadsTo().getTitle());
+        }
     }
 
-    public void showEnemies(){
+    public void showEntities(){
         if(player.getLocation().getMobs().size() > 0){
-            System.out.println("\nEnemies in room:");
+            System.out.println("\nEntities in room:");
             for(EntityMob mob: player.getLocation().getMobs()){
-                System.out.println("[" + mob.getUid() + "] " + mob.getName() + " [HP: " + mob.getHealth() + " | Damage: " + mob.getStrength() + "]");
+                System.out.println("[" + player.getLocation().getMobs().indexOf(mob) + "] " + mob.getName() + " [HP: " + mob.getHealth() + " | Damage: " + mob.getStrength() + "]");
             }
         }
     }
 
     public boolean action(){
-        String command = Utilities.cmd("");
-        String[] args = command.split("\\s+");
-        Command cmd = factory.getCommand(args[0]);
-        if(cmd != null){
-            cmd.execute(args, player);
-            return true;
+        String command = Utilities.cmd("> ");
+        String[] args = Utilities.parseInput(command);
+
+        if(args.length < 1){
+            return false;
         }
 
-        System.out.println("You're spouting jibberish.");
+        Command cmd = factory.getCommand(args[0]);
+        if(cmd != null){
+            if(isAllowed(command)){
+                cmd.execute(args, player);
+            }else{
+                System.out.println("You can't use that command outside of battle!");
+            }
+        }else{
+            System.out.println("You're spouting gibberish.");
+        }
         return true;
     }
 
     public EntityPlayer getPlayer(){
         return player;
+    }
+
+    public CommandManager getFactory(){
+        return factory;
+    }
+
+    private boolean isAllowed(String cmd){
+        for(Class<? extends Command> command : allowedCommands){
+            if(factory.getAliases(command).contains(Utilities.parseInput(cmd)[0])){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public BattleManager getBattleManager(){
+        return battleManager;
     }
 }

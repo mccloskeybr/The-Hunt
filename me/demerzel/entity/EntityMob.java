@@ -1,31 +1,28 @@
 package me.demerzel.entity;
 
 import me.demerzel.item.Item;
-import me.demerzel.item.ItemSlot;
 import me.demerzel.location.Location;
 import me.demerzel.util.GameManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Demerzel on 1/28/16.
  */
 public abstract class EntityMob extends Entity {
     private int expRewarded;
+    private int moneyRewarded;
     private int strength;
-    private int uid;
-    private static int count = 1;
+    private String attackText;
     private ArrayList<Item> loot;
 
-    public EntityMob(String name, String bio, int health, int mana, int speed, Location location, int expRewarded, int strength) {
-        super(name, bio, health, mana, speed, location);
+    public EntityMob(String name, String bio, int maxHealth, int maxMana, int speed, Location location, int expRewarded, int moneyRewarded, int strength, String attackText, EntityBehavior type) {
+        super(name, bio, maxHealth, maxMana, speed, location, type);
         this.loot = new ArrayList<>();
         this.expRewarded = expRewarded;
+        this.moneyRewarded = moneyRewarded;
         this.strength = strength;
-
-        this.uid = count;
-        count++;
+        this.attackText = attackText;
     }
 
     public int getExpRewarded() {
@@ -36,6 +33,14 @@ public abstract class EntityMob extends Entity {
         this.expRewarded = expRewarded;
     }
 
+    public int getMoneyRewarded() {
+        return moneyRewarded;
+    }
+
+    public void setMoneyRewarded(int moneyRewarded) {
+        this.moneyRewarded = moneyRewarded;
+    }
+
     public int getStrength() {
         return strength;
     }
@@ -44,12 +49,12 @@ public abstract class EntityMob extends Entity {
         this.strength = strength;
     }
 
-    public int getUid() {
-        return uid;
+    public String getAttackText() {
+        return attackText;
     }
 
-    public int getCount(){
-        return count;
+    public void setAttackText(String attackText) {
+        this.attackText = attackText;
     }
 
     public ArrayList<Item> getLoot() {
@@ -62,19 +67,47 @@ public abstract class EntityMob extends Entity {
 
     public void removeLoot(Item item){
         if(loot.contains(item)){
-            loot.add(item);
+            loot.remove(item);
         }
     }
 
-    public void onDefeat() {
-        System.out.println("You have defeated the " + getName());
+    public void attack(EntityPlayer player){
+        System.out.println(getAttackText());
+        double d = Math.random();
+        if(d >= 0.1){
+            int damage = Math.min(player.getHealth(), getStrength() - player.getArmor());
 
-        for(Item item:this.getLoot()){
+            if(damage < 0){
+                damage = 0;
+            }
+
+            player.modHealth(-damage);
+            System.out.println("You took " + damage + " damage! Remaining HP: [" + player.getHealth() + "]");
+        }else{
+            System.out.println("But he misses. What a jerk!");
+        }
+    }
+
+    public void onAttack(EntityPlayer player){
+        int damage = Math.min(getHealth(), player.getAttack());
+
+        if(damage < 0){
+            damage = 0;
+        }
+        modHealth(-damage);
+    }
+
+    public void onDefeat() {
+        double d = Math.random();
+        this.getLoot().stream().filter(item -> d >= 0.5).forEach(item -> {
             GameManager.getInstance().getPlayer().addItem(item);
             System.out.println("Looted " + item.getName() + " from " + getName());
-        }
+        });
 
         System.out.println("Gained " + getExpRewarded() + " EXP!");
+        System.out.println("Found " + getMoneyRewarded() + " coins!");
         GameManager.getInstance().getPlayer().modExperience(getExpRewarded());
+        GameManager.getInstance().getPlayer().modMoney(getMoneyRewarded());
+        System.out.println();
     }
 }
